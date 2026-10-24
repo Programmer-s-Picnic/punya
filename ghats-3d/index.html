@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101b2d">
+<meta name="description" content="Walk through an immersive, interactive 3D artistic recreation of the Varanasi ghats. Explore the riverfront steps, temples and Ganga on mobile or desktop.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Walk the Ghats in 3D | Punya Yatra">
+<meta property="og:description" content="Take a virtual walk along the ghats of Kashi, explore heritage landmarks and cruise the Ganga in 3D.">
+<meta property="og:image" content="https://punyayatra.in/assets/images/photos/river-temple.jpeg">
+<meta property="og:url" content="https://punyayatra.in/ghats-3d/">
+<link rel="canonical" href="https://punyayatra.in/ghats-3d/">
+<link rel="icon" href="../favicon.png">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<title>Walk the Ghats in 3D | Punya Yatra · Varanasi</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+:root{color-scheme:dark;--ink:#f8f2e8;--muted:#b8c6d8;--glass:rgba(12,23,42,.78);--gold:#f4c47c;--border:rgba(255,255,255,.16)}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}body{font-family:"DM Sans",system-ui,sans-serif;color:var(--ink);background:linear-gradient(180deg,#83b6d4,#e9bea1 55%,#557f92);overscroll-behavior:none}button,a{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:3px}a{color:inherit}
+#scene{position:fixed;inset:0}#scene canvas{display:block;width:100%;height:100%;touch-action:none}
+.vignette{pointer-events:none;position:fixed;inset:0;background:linear-gradient(180deg,rgba(5,15,30,.44),transparent 25%,transparent 65%,rgba(3,14,26,.45))}
+.top{position:fixed;top:0;left:0;right:0;padding:17px clamp(14px,3vw,42px);display:flex;align-items:center;justify-content:space-between;gap:16px;z-index:5}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;white-space:nowrap}.brand-mark{display:grid;place-items:center;width:40px;height:40px;border:1px solid rgba(244,196,124,.65);border-radius:13px;background:rgba(20,30,44,.78);color:var(--gold);font-size:24px}.brand strong{display:block;font:600 19px "Playfair Display",serif;letter-spacing:.01em}.brand small{display:block;color:#e6dac7;font-size:10px;letter-spacing:.22em;text-transform:uppercase}
+.top-actions{display:flex;align-items:center;gap:8px}.chip{background:var(--glass);color:var(--ink);border:1px solid var(--border);border-radius:999px;padding:10px 14px;backdrop-filter:blur(16px);transition:background .2s,transform .2s}.chip:hover{background:rgba(36,54,74,.92)}.chip[aria-pressed=true]{border-color:var(--gold);color:var(--gold)}.iconbtn{width:41px;height:41px;border-radius:50%;padding:0;font-size:19px}
+.banner{position:fixed;top:94px;left:clamp(16px,3vw,45px);max-width:400px;z-index:4;pointer-events:none;text-shadow:0 2px 20px rgba(0,0,0,.3)}.eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#ffe4b6;font-weight:700}.banner h1{margin:11px 0 12px;font:500 clamp(36px,4vw,61px)/1.06 "Playfair Display",serif;letter-spacing:-.025em}.banner h1 em{font-weight:500;font-style:italic;color:#ffe0a4}.banner p{font-size:14px;line-height:1.65;color:#f1f3f7;max-width:335px}.cta{pointer-events:auto;display:inline-flex;align-items:center;gap:9px;border-radius:999px;background:#f4c47c;border:0;color:#23232b;padding:13px 22px;font-weight:700;margin-top:9px;box-shadow:0 10px 32px rgba(0,0,0,.25)}.cta:hover{background:#ffe0a3}
+.side{position:fixed;left:clamp(14px,3vw,42px);bottom:112px;z-index:5;max-width:340px;min-width:230px;border:1px solid var(--border);background:var(--glass);border-radius:19px;padding:18px;backdrop-filter:blur(20px);box-shadow:0 16px 35px #12223330}.side small{color:var(--gold);font-size:10px;letter-spacing:.2em;text-transform:uppercase}.side h2{font:500 24px/1.2 "Playfair Display",serif;margin:6px 0}.side p{font-size:12px;line-height:1.6;color:var(--muted);margin:0 0 12px}.side .tip{border-top:1px solid var(--border);padding-top:10px;font-size:11px;color:#d8dfe8}
+.modes{position:fixed;right:clamp(14px,3vw,42px);bottom:120px;z-index:5;display:flex;flex-direction:column;gap:9px}.mode{min-width:128px;text-align:left}.mode b{font-size:14px}.mode span{display:block;color:#c2cbd6;font-size:10px;margin-top:2px}.mode.active{background:#f4c47c;color:#222e3d;border-color:transparent}.mode.active span{color:#3b4a56}
+.gbar{position:fixed;bottom:0;left:0;right:0;z-index:6;padding:15px max(15px,calc((100vw - 1000px)/2)) max(19px,env(safe-area-inset-bottom));background:linear-gradient(180deg,transparent,rgba(9,19,33,.86) 45%);display:flex;align-items:center;gap:10px;overflow-x:auto;scrollbar-width:none}.gbar::-webkit-scrollbar{display:none}.gbar button{border:1px solid rgba(255,255,255,.22);background:rgba(13,29,48,.74);color:#f2eee9;border-radius:999px;padding:10px 15px;white-space:nowrap;font-size:12px;backdrop-filter:blur(16px)}.gbar button.active{background:#f4c47c;color:#1a2635;border-color:#f4c47c;font-weight:700}
+.marker{position:absolute;z-index:3;transform:translate(-50%,-50%);padding:6px 11px;border-radius:999px;border:1px solid #fff9;background:rgba(16,30,44,.72);color:white;white-space:nowrap;font-size:11px;pointer-events:auto;text-shadow:0 1px 3px #14202e;backdrop-filter:blur(8px)}
+#loader{position:fixed;inset:0;z-index:12;background:linear-gradient(135deg,#101e32,#294662);display:grid;place-items:center;text-align:center;padding:24px}#loader h2{font:500 32px "Playfair Display",serif;margin:10px 0}.spinner{width:38px;height:38px;border:3px solid #fff4;border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;margin:auto}@keyframes spin{to{transform:rotate(360deg)}}#loader p{max-width:350px;line-height:1.6;color:#cbd7e6}#loader button{display:none;margin:12px auto}
+#help{position:fixed;inset:0;z-index:20;background:#020a14af;display:none;place-items:center;padding:20px}#help.open{display:grid}.help-card{width:min(100%,520px);background:#14243a;border:1px solid #fff3;border-radius:22px;padding:26px 30px;box-shadow:0 24px 80px #0007}.help-card h2{font:500 29px "Playfair Display",serif}.help-card p,.help-card li{font-size:14px;color:#d1d9e5;line-height:1.7}.help-card ul{padding-left:20px}.help-card button{margin-top:12px}
+#joystick{display:none;position:fixed;left:25px;bottom:140px;width:116px;height:116px;border:1px solid rgba(255,255,255,.45);background:#112b4870;border-radius:50%;z-index:7;touch-action:none;user-select:none}#stick{position:absolute;left:35px;top:35px;width:46px;height:46px;border-radius:50%;background:#f5c580b9;box-shadow:0 0 20px #1118;pointer-events:none}#status{position:fixed;left:50%;transform:translateX(-50%);bottom:82px;padding:8px 15px;border-radius:999px;background:#142338c9;color:#e5ebf5;z-index:7;display:none;font-size:12px;white-space:nowrap}
+.credit{position:fixed;right:16px;top:70px;z-index:4;font-size:10px;color:#f5e6d2a6;text-align:right;pointer-events:none}
+@media(max-width:780px){.top{padding:12px 14px}.brand strong{font-size:16px}.brand small{font-size:9px}.top-actions .chip:first-child{display:none}.banner{top:87px;left:18px;max-width:75vw}.banner h1{font-size:33px;margin:6px 0}.banner p{font-size:12px;max-width:250px;margin:6px 0}.banner .cta{padding:11px 15px;font-size:12px}.side{bottom:91px;left:12px;max-width:215px;min-width:0;padding:11px 12px;border-radius:14px}.side h2{font-size:19px;margin:3px 0}.side p{font-size:11px;line-height:1.45}.side .tip{display:none}.modes{right:12px;bottom:100px;gap:5px}.mode{min-width:92px;padding:9px}.mode b{font-size:12px}.mode span{display:none}.gbar{padding:12px 12px max(14px,env(safe-area-inset-bottom))}.gbar button{font-size:11px;padding:9px 12px}.credit{display:none}#joystick{left:22px;bottom:215px;width:104px;height:104px}#stick{left:30px;top:30px;width:44px;height:44px}.marker{font-size:9px;padding:4px 7px}}
+@media(max-width:390px){.banner p{display:none}.side{max-width:175px}.side p{display:none}.brand-mark{width:33px;height:33px}.top-actions{gap:5px}.chip{padding:9px 10px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Walk the Ghats in 3D","url":"https://punyayatra.in/ghats-3d/","description":"An interactive artistic 3D interpretation of five Varanasi ghats, not a surveyed geographic reconstruction.","isPartOf":{"@type":"WebSite","name":"Punya Yatra","url":"https://punyayatra.in/"}}</script>
+</head>
+<body>
+<div id="scene" aria-label="Interactive 3D scene of the Varanasi riverfront"></div><div class="vignette"></div>
+<header class="top"><a href="../" class="brand" aria-label="Return to Punya Yatra home"><span class="brand-mark" aria-hidden="true">ॐ</span><span><strong>Punya Yatra</strong><small>Immersive Kashi</small></span></a><div class="top-actions"><button id="reset" class="chip" title="Return to starting view">↺ Reset view</button><button id="time" class="chip" aria-pressed="false" title="Switch between sunrise and evening">☀ Sunrise</button><button id="helpBtn" class="chip iconbtn" title="Help" aria-label="How to explore">?</button></div></header>
+<div class="banner" id="banner"><div class="eyebrow">The eternal city · Varanasi</div><h1>Walk beside<br><em>the Ganga.</em></h1><p>Discover the textures of Kashi: riverfront steps, temple spires, old havelis and gently moving boats.</p><button id="start" class="cta">Enter the ghats <span aria-hidden="true">→</span></button></div>
+<div id="markers" aria-label="Explore landmarks"></div>
+<section class="side" aria-live="polite"><small id="areaType">YOUR VIRTUAL STOP</small><h2 id="areaName">Dashashwamedh Ghat</h2><p id="areaText">The ceremonial heart of Varanasi, known for its evening Ganga Aarti.</p><div class="tip" id="hint">Use A / D to move sideways, W / S to walk, and drag to look around.</div></section>
+<div class="modes" aria-label="Viewing modes"><button class="chip mode active" data-mode="overview"><b>◇ Aerial view</b><span>See the riverfront</span></button><button class="chip mode" data-mode="walk"><b>♙ Walk the steps</b><span>Explore freely</span></button><button class="chip mode" data-mode="boat"><b>≈ River cruise</b><span>See the ghats by boat</span></button></div>
+<nav id="ghatbar" class="gbar" aria-label="Visit a ghat"></nav>
+<div id="joystick" aria-label="Virtual walking joystick"><div id="stick"></div></div>
+<div id="status" role="status"></div><div class="credit">Artistic 3D interpretation · Not to scale<br>Developed and maintained by Champak Roy</div>
+<div id="loader"><div><div class="spinner"></div><h2>Preparing the ghats of Kashi</h2><p>Building the river, carved steps and old city skyline in 3D…</p><button id="retry" class="cta" onclick="location.reload()">Try again</button></div></div>
+<div id="help" role="dialog" aria-modal="true" aria-labelledby="helpTitle"><div class="help-card"><h2 id="helpTitle">How to explore Kashi</h2><p>Choose a ghat from the bottom ribbon or use any viewing mode.</p><ul><li><strong>Walk:</strong> W / A / S / D or arrow up/down + A/D to move; drag anywhere on the scene to turn the camera.</li><li><strong>Mobile:</strong> Move the round joystick with your left thumb; drag on the right side of the screen to look around.</li><li><strong>River cruise:</strong> Enjoy a moving boat-side view of the temples and steps.</li><li><strong>Sunrise / evening:</strong> Change the atmosphere at the top right. Select a ghat to jump directly there.</li></ul><p><strong>Note:</strong> This is an evocative, stylised reconstruction, not an exact 3D survey or a navigation map. Sacred sites are presented respectfully.</p><button id="closeHelp" class="cta">Continue exploring →</button></div></div>
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js';
+const $=s=>document.querySelector(s), clamp=THREE.MathUtils.clamp;
+const compact=matchMedia('(max-width:780px)').matches, reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const zones=[
+ {x:-84,name:'Assi Ghat',about:'A lively southern ghat known for Subah-e-Banaras, morning music and prayers.',color:0xc99171},
+ {x:-42,name:'Kedar Ghat',about:'Distinctive riverfront steps and the Kedareshwar temple traditions.',color:0xb77b66},
+ {x:0,name:'Dashashwamedh Ghat',about:'The ceremonial heart of Varanasi, celebrated for its evening Ganga Aarti.',color:0xd9a67d},
+ {x:42,name:'Man Mandir Ghat',about:'Historic riverfront architecture beneath the old Man Mandir observatory.',color:0xb6a087},
+ {x:84,name:'Scindia Ghat',about:'A quieter riverfront setting known for a leaning, partly submerged Shiva temple.',color:0xa68a74}
+];
+let selected=2,mode='overview',dusk=false,clock=0,cruise=0,dragging=false,startingX=0,startingY=0;
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x9fc4da);scene.fog=new THREE.FogExp2(0xacc9db,.0052);
+const camera=new THREE.PerspectiveCamera(64,innerWidth/innerHeight,.1,650); camera.position.set(43,44,-104);
+const renderer=new THREE.WebGLRenderer({antialias:!compact,powerPreference:'high-performance'});
+renderer.setPixelRatio(Math.min(devicePixelRatio,compact?1.35:1.8));renderer.setSize(innerWidth,innerHeight);
+renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.23;
+$('#scene').appendChild(renderer.domElement);
+const ambient=new THREE.HemisphereLight(0xeaf6ff,0x9c5c35,2.1);scene.add(ambient);
+const sun=new THREE.DirectionalLight(0xffdfaa,2.55);sun.position.set(-65,85,-95);scene.add(sun);
+const gold=new THREE.MeshStandardMaterial({color:0xe6be8b,roughness:.9}),dark=new THREE.MeshStandardMaterial({color:0x5a3b32,roughness:.95}),stone=new THREE.MeshStandardMaterial({color:0xae9a85,roughness:.95});
+const mats=[0xbf9076,0xd8b393,0xb8a08d,0xd7a886,0xa9988c,0xe2b99d,0x9f7969,0xc9b19d].map(c=>new THREE.MeshStandardMaterial({color:c,roughness:.94}));
+const boxG=new THREE.BoxGeometry(1,1,1),cylG=new THREE.CylinderGeometry(1,1,1,10),sphereG=new THREE.SphereGeometry(1,9,7);
+const box=(p,w,h,d,x,y,z,mat)=>{const m=new THREE.Mesh(boxG,mat);m.scale.set(w,h,d);m.position.set(x,y,z);p.add(m);return m};
+const cyl=(p,rt,rb,h,x,y,z,mat,n=10)=>{const m=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,n),mat);m.position.set(x,y,z);p.add(m);return m};
+const cone=(p,r,h,x,y,z,mat,n=12)=>{const m=new THREE.Mesh(new THREE.ConeGeometry(r,h,n),mat);m.position.set(x,y,z);p.add(m);return m};
+const random=(seed)=>{let n=seed;return ()=>{n=(n*1664525+1013904223)>>>0;return n/4294967296}};const rng=random(314159);
+const rnd=(a,b)=>a+(b-a)*rng();
+const waterGeometry=new THREE.PlaneGeometry(470,400,82,42);
+const waterMaterial=new THREE.MeshStandardMaterial({color:0x4b94a4,metalness:.2,roughness:.42,side:THREE.DoubleSide,transparent:true,opacity:.96});
+const river=new THREE.Mesh(waterGeometry,waterMaterial);river.rotation.x=-Math.PI/2;river.position.set(0,-.45,-219);scene.add(river);
+const waterOriginal=Float32Array.from(waterGeometry.attributes.position.array);
+box(scene,245,2.5,46,0,10.4,36,new THREE.MeshStandardMaterial({color:0xb1a08e,roughness:1}));
+const ghatNames=zones.map(z=>z.name);
+const getGround=z=>clamp(1+Math.floor((z+19.36)/2.75)*.92,1,11.12);
+zones.forEach((g,k)=>{
+ const color=mats[k+1];
+ for(let s=0;s<12;s++){
+  const z=-18+s*2.75,h=1+s*.92;
+  box(scene,41.82,h,2.72,g.x,h/2,z,(s%4===0)?stone:color);
+  box(scene,41.82,.08,.15,g.x,h+.015,z-1.28,gold);
+  if(s%3===0){for(let j=0;j<6;j++)box(scene,.035,.045,2.64,g.x-19+j*7,h+.05,z,stone)}
+ }
+ box(scene,42,.28,17,g.x,11.7,21.8,color);
+ box(scene,42,.35,.7,g.x,11.9,13.7,gold);
+ if(k<4){box(scene,.4,10,43,g.x+20.9,5,0,stone)}
+});
+const facades=[];
+function building(x,z,w,d,h,idx,base=11.84){
+ const gr=new THREE.Group();scene.add(gr);
+ const mat=mats[idx%mats.length],trim=mats[(idx+3)%mats.length],startY=base+h/2;
+ box(gr,w,h,d,x,startY,z,mat);
+ const floors=Math.max(2,Math.floor(h/5)),windows=Math.max(2,Math.floor(w/3.9));
+ const facade=z-d/2-.035;
+ for(let row=0;row<floors;row++){
+  const y=base+3+row*4.5;
+  if(y>base+h-2)continue;
+  box(gr,w+.6,.32,d+.6,x,y+1.8,z,trim);
+  for(let col=0;col<windows;col++){
+   const wx=x-w/2+(col+.5)*w/windows;
+   box(gr,Math.min(1.75,w/windows-.55),2.15,.10,wx,y,facade,dark);
+   box(gr,Math.min(1.6,w/windows-.6),.10,.18,wx,y+.95,facade-.07,gold);
+   box(gr,.12,2.1,.2,wx,y,facade-.14,trim);
+   if(row>0)box(gr,Math.min(2.25,w/windows-.4),.22,.73,wx,y-1.3,facade-.32,trim);
+  }
+ }
+ box(gr,w+.8,.57,d+.8,x,base+h,z,trim);
+ box(gr,w+.2,.46,d+.2,x,base+h+.64,z,mat);
+ for(let q=-1;q<=1;q++)box(gr,.4,1.1,.45,x+q*w*.28,base+h+1.25,facade,trim);
+ facades.push(gr);return gr;
+}
+zones.forEach((g,k)=>{
+ const widths=[12,13,10,12,11],center=g.x;
+ const architecture=[
+  {x:center-13,w:11,h:16+rnd(0,8),mat:k+1},
+  {x:center-.5,w:15,h:19+rnd(0,7),mat:k+3},
+  {x:center+14,w:11,h:14+rnd(0,9),mat:k+5}
+ ];
+ architecture.forEach(a=>building(a.x,30,a.w,11,a.h,a.mat));
+ // Pavilion at the top of the stairway.
+ const roofY=18.1;
+ for(const dx of [-5.5,5.5])for(const dz of [-3.2,3.2])cyl(scene,.27,.34,5.4,center+dx,14.5,17.6+dz,gold);
+ box(scene,15,.8,10,center,17.4,17.6,mats[(k+2)%mats.length]);
+ box(scene,16,.4,11,center,18.1,17.6,gold);
+ cone(scene,1.25,4.4,center,20.5,17.6,mats[(k+4)%mats.length]);
+ // Lamps, banners and stair-side shrines.
+ for(const dx of [-15,15]){
+  const px=center+dx;
+  cyl(scene,.09,.12,5.7,px,10.9,-4,dark);
+  const glow=new THREE.Mesh(new THREE.SphereGeometry(.44,8,6),new THREE.MeshBasicMaterial({color:0xffd489}));glow.position.set(px,13.7,-4);scene.add(glow);
+ }
+ const flag=new THREE.Mesh(new THREE.PlaneGeometry(1.85,1.1),new THREE.MeshBasicMaterial({color:k%2?0xffb843:0xe76d39,side:THREE.DoubleSide}));
+ flag.position.set(center+7,24.3,17.7);flag.rotation.y=.4;scene.add(flag);
+ cyl(scene,.06,.06,7,center+7,21.4,17.7,dark);
+});
+function temple(x,z,h,bodyColor,spireColor){
+ const base=11.85,bodyMat=new THREE.MeshStandardMaterial({color:bodyColor,roughness:.92}),spireMat=new THREE.MeshStandardMaterial({color:spireColor,roughness:.83});
+ box(scene,8,9,8,x,base+4.5,z,bodyMat);
+ for(const dx of [-3.2,3.2])for(const dz of [-3.2,3.2])cyl(scene,.36,.45,8,x+dx,base+4,z+dz,gold);
+ box(scene,9,1.2,9,x,base+9.5,z,spireMat);
+ const sh=h-11;
+ for(let j=0;j<6;j++){const progress=j/6; const radius=3.75*(1-progress*.77);cyl(scene,radius,radius+.35,sh/6,x,base+10.1+(j+.5)*sh/6,z,spireMat,12);box(scene,radius*1.9,.27,radius*1.9,x,base+10.1+j*sh/6,z,gold)}
+ cone(scene,1.05,4,x,base+h+.1,z,spireMat);
+ const top=new THREE.Mesh(sphereG,gold);top.position.set(x,base+h+2.25,z);top.scale.set(.45,.65,.45);scene.add(top);
+ box(scene,2.2,5,.16,x,base+2.6,z-4.12,dark);
+}
+temple(-46,41,28,0xe7af8a,0xc9814f);
+temple(11,44,37,0xd9a382,0xda8046);
+temple(86,43,26,0xd2b29b,0xa26c53);
+// Scindia's partly submerged riverside shrine, evocative rather than exact.
+const leaning=new THREE.Group();leaning.position.set(91,.5,-19);leaning.rotation.z=-.18;scene.add(leaning);
+box(leaning,6,5,6,0,2.4,0,mats[4]);cyl(leaning,3.3,3.6,1,0,5.6,0,gold);cone(leaning,3.1,7,0,9.4,0,mats[6]);
+// Stepside arches and parasols.
+const umbrellaMats=[0xeb9b58,0xf1d2a0,0xb94437,0xc6a7c0].map(c=>new THREE.MeshStandardMaterial({color:c,side:THREE.DoubleSide}));
+for(let i=0;i<34;i++){
+ const x=rnd(-99,99),z=rnd(-14,9),y=getGround(z);
+ if(i%2===0){cyl(scene,.07,.07,3.4,x,y+1.7,z,dark);cone(scene,1.85,.9,x,y+3.5,z,umbrellaMats[i%4],9)}
+ else {box(scene,1.2,.65,.6,x,y+.3,z,mats[i%7])}
+}
+const people=[];
+const skin=[0xae7051,0x9b6143,0xd6a27c,0x85583c].map(c=>new THREE.MeshStandardMaterial({color:c}));
+const cloth=[0xe6a54a,0xb94748,0x506a96,0xf0d19b,0xf2c1aa,0x6eaf91,0xdcd6cb].map(c=>new THREE.MeshStandardMaterial({color:c}));
+for(let i=0;i<(compact?42:88);i++){
+ const x=rnd(-98,98),z=rnd(-15,13),g=new THREE.Group(),y=getGround(z);
+ g.position.set(x,y,z);
+ cyl(g,.31,.39,1.32,0,.85,0,cloth[i%cloth.length],8);
+ const head=new THREE.Mesh(sphereG,skin[i%skin.length]);head.position.y=1.68;head.scale.set(.29,.35,.29);g.add(head);
+ for(const dx of [-.38,.38])cyl(g,.09,.11,.98,dx,.89,0,skin[i%skin.length],6);
+ scene.add(g);people.push({g,startX:x,z,phase:rnd(0,6.28),speed:rnd(.12,.48),wander:rnd(.5,3.3)});
+}
+const boats=[];
+function boat(x,z,scale=1){
+ const gr=new THREE.Group();gr.position.set(x,.25,z);gr.scale.setScalar(scale);scene.add(gr);
+ const wood=new THREE.MeshStandardMaterial({color:0x764335,roughness:.8}),edge=new THREE.MeshStandardMaterial({color:0xc99d65,roughness:.86});
+ const hull=new THREE.Mesh(sphereG,wood);hull.scale.set(4.5,.75,1.38);hull.position.y=.27;gr.add(hull);
+ for(const dx of [-3.1,-1.6,0,1.6,3.1])box(gr,.19,.08,2.7,dx,.92,0,edge);
+ box(gr,7,.16,.17,0,1.05,-1.3,edge);box(gr,7,.16,.17,0,1.05,1.3,edge);
+ cone(gr,.35,1.65,-4.6,.45,0,wood,6).rotation.z=-Math.PI/2;
+ cone(gr,.35,1.65,4.6,.45,0,wood,6).rotation.z=Math.PI/2;
+ boats.push({gr,x,z,phase:rnd(0,6.28),speed:rnd(.25,.6)});
+}
+for(let i=0;i<16;i++)boat(rnd(-128,128),rnd(-90,-27),rnd(.68,1.2));
+for(let i=0;i<14;i++){
+ const gr=new THREE.Group();gr.position.set(rnd(-125,125),rnd(19,31),rnd(-135,-25));
+ const white=new THREE.MeshBasicMaterial({color:0xffffff});
+ for(const dx of [-.65,.65]){const wing=new THREE.Mesh(new THREE.PlaneGeometry(1.3,.2),white);wing.rotation.z=dx>0?.25:-.25;wing.position.x=dx;gr.add(wing)}
+ gr.userData.phase=rnd(0,6.28);scene.add(gr);facades.push(gr);
+}
+const landmarks=zones.map((g,i)=>{
+ const node=document.createElement('button');node.className='marker';node.textContent=g.name;node.setAttribute('aria-label','Visit '+g.name);node.addEventListener('click',()=>visit(i));
+ $('#markers').appendChild(node);return {node,point:new THREE.Vector3(g.x,25,27)};
+});
+zones.forEach((g,i)=>{const b=document.createElement('button');b.textContent=g.name;b.addEventListener('click',()=>visit(i));$('#ghatbar').appendChild(b)});
+function select(i){
+ selected=i;$('#areaName').textContent=zones[i].name;$('#areaText').textContent=zones[i].about;
+ [...$('#ghatbar').children].forEach((b,j)=>{b.classList.toggle('active',i===j);b.setAttribute('aria-current',i===j?'location':'false')});
+}
+const player={x:0,z:-9,y:0,yaw:Math.PI,pitch:-.08};
+const key=new Set(),joy={x:0,y:0};let joyPointer=null;
+function showIntro(visible){$('#banner').style.display=visible?'block':'none'}
+function setMode(next){
+ mode=next;document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));
+ const walking=mode==='walk';$('#joystick').style.display=walking&&compact?'block':'none';
+ $('#hint').textContent=walking?'W / A / S / D to move · Drag to look · On mobile use the joystick':mode==='boat'?'A moving Ganga-side view of the riverfront':'Select any ghat below, or enter the ghats to walk freely';
+ if(walking) {player.x=zones[selected].x;player.z=-10;player.yaw=Math.PI;player.pitch=-.10;player.y=getGround(player.z)+1.7}
+ else if(next==='boat')cruise=selected/5;
+ showIntro(false);
+}
+function visit(i){select(i);if(mode==='overview')setMode('walk');else if(mode==='walk'){player.x=zones[i].x;player.z=-10;player.y=getGround(player.z)+1.7;player.yaw=Math.PI;player.pitch=-.1}else cruise=i/5}
+function reset(){select(2);mode='overview';document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));$('#joystick').style.display='none';cruise=0;showIntro(true)}
+$('#start').addEventListener('click',()=>setMode('walk'));$('#reset').addEventListener('click',reset);document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.mode)));
+$('#time').addEventListener('click',()=>{dusk=!dusk;$('#time').textContent=dusk?'☾ Evening':'☀ Sunrise';$('#time').setAttribute('aria-pressed',String(dusk));scene.background.setHex(dusk?0x34405c:0x9fc4da);scene.fog.color.setHex(dusk?0x3e465f:0xacc9db);ambient.intensity=dusk?1.08:2.1;sun.intensity=dusk?1.1:2.55;sun.color.setHex(dusk?0xff916a:0xffdfaa);waterMaterial.color.setHex(dusk?0x325a7a:0x4b94a4)});
+$('#helpBtn').addEventListener('click',()=>$('#help').classList.add('open'));$('#closeHelp').addEventListener('click',()=>$('#help').classList.remove('open'));$('#help').addEventListener('click',e=>{if(e.target.id==='help')$('#help').classList.remove('open')});
+window.addEventListener('keydown',e=>{if(e.key==='Escape'){$('#help').classList.remove('open');dragging=false}if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key))e.preventDefault();key.add(e.key.toLowerCase())});
+window.addEventListener('keyup',e=>key.delete(e.key.toLowerCase()));window.addEventListener('blur',()=>key.clear());
+const canvas=renderer.domElement;
+canvas.addEventListener('pointerdown',e=>{if(mode!=='walk')return;dragging=true;startingX=e.clientX;startingY=e.clientY;canvas.setPointerCapture(e.pointerId)});
+canvas.addEventListener('pointermove',e=>{if(!dragging||mode!=='walk')return;const dx=e.clientX-startingX,dy=e.clientY-startingY;startingX=e.clientX;startingY=e.clientY;player.yaw-=dx*.004;player.pitch=clamp(player.pitch+dy*.0036,-.9,.65)});
+canvas.addEventListener('pointerup',()=>dragging=false);canvas.addEventListener('pointercancel',()=>dragging=false);
+const stick=$('#stick'),pad=$('#joystick');
+function moveJoy(e){const r=pad.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2,dx=e.clientX-cx,dy=e.clientY-cy,len=Math.hypot(dx,dy)||1,max=33,scale=Math.min(len,max)/len;joy.x=dx*scale/max;joy.y=-dy*scale/max;stick.style.transform='translate('+(joy.x*max)+'px,'+(-joy.y*max)+'px)'}
+pad.addEventListener('pointerdown',e=>{joyPointer=e.pointerId;pad.setPointerCapture(e.pointerId);moveJoy(e);e.preventDefault()});pad.addEventListener('pointermove',e=>{if(e.pointerId===joyPointer)moveJoy(e)});function endJoy(e){if(e.pointerId!==joyPointer)return;joyPointer=null;joy.x=joy.y=0;stick.style.transform='translate(0,0)'}pad.addEventListener('pointerup',endJoy);pad.addEventListener('pointercancel',endJoy);
+const tempLook=new THREE.Vector3(),v3=new THREE.Vector3();
+const frameClock=new THREE.Clock();
+function animate(){
+ const dt=Math.min(frameClock.getDelta(),.045),t=clock+=dt;
+ if(mode==='overview'){
+  const center=zones[selected].x;camera.position.set(center+47+Math.sin(t*.15)*12,39+Math.sin(t*.1)*3,-100+Math.cos(t*.16)*7);tempLook.set(center,13,14);camera.lookAt(tempLook);
+ }else if(mode==='boat'){
+  cruise=(cruise+dt*.007)%1;
+  const x=-110+220*cruise;camera.position.set(x,4.1+Math.sin(t*1.4)*.12,-48);camera.lookAt(x+5,14,17);
+  const nearest=zones.reduce((acc,z,i)=>Math.abs(z.x-x)<Math.abs(zones[acc].x-x)?i:acc,0);if(nearest!==selected)select(nearest);
+ }else{
+  const ahead=(key.has('w')||key.has('arrowup')?1:0)-(key.has('s')||key.has('arrowdown')?1:0)+joy.y;
+  const sideways=(key.has('d')?1:0)-(key.has('a')?1:0)+joy.x;
+  if(key.has('arrowleft'))player.yaw+=dt*1.45;if(key.has('arrowright'))player.yaw-=dt*1.45;
+  const len=Math.hypot(ahead,sideways),speed=(key.has('shift')?13.5:7.3)*dt/(len>1?len:1);
+  const nx=clamp(player.x+(Math.sin(player.yaw)*ahead+Math.cos(player.yaw)*sideways)*speed,-101.5,101.5);
+  const nz=clamp(player.z+(-Math.cos(player.yaw)*ahead+Math.sin(player.yaw)*sideways)*speed,-18,13.3);
+  player.x=nx;player.z=nz;player.y=THREE.MathUtils.damp(player.y,getGround(nz)+1.72,10,dt);
+  camera.position.set(player.x,player.y,player.z);
+  tempLook.set(Math.sin(player.yaw)*Math.cos(player.pitch),Math.sin(player.pitch),-Math.cos(player.yaw)*Math.cos(player.pitch));camera.lookAt(camera.position.clone().add(tempLook));
+  const nearest=zones.reduce((acc,z,i)=>Math.abs(z.x-player.x)<Math.abs(zones[acc].x-player.x)?i:acc,0);if(nearest!==selected)select(nearest);
+ }
+ if(!reduced){
+  for(let i=0;i<waterGeometry.attributes.position.count;i++){const x=waterOriginal[i*3],y=waterOriginal[i*3+1];waterGeometry.attributes.position.setZ(i,Math.sin(x*.105+t*1.1)*.15+Math.sin(y*.12+t*.85)*.12)}
+  waterGeometry.attributes.position.needsUpdate=true;
+  for(const b of boats){b.gr.position.x=b.x+Math.sin(t*b.speed+b.phase)*3;b.gr.position.y=.14+Math.sin(t*1.2+b.phase)*.13;b.gr.rotation.z=Math.sin(t+b.phase)*.025}
+  people.forEach((p,i)=>{p.g.position.x=p.startX+Math.sin(t*p.speed+p.phase)*p.wander;p.g.rotation.y=Math.sin(t*p.speed+p.phase)>.0?Math.PI/2:-Math.PI/2;p.g.position.y=getGround(p.z)+Math.abs(Math.sin(t*p.speed*5+i))*.025});
+ }
+ landmarks.forEach(({node,point})=>{v3.copy(point).project(camera);const visible=v3.z<1&&v3.z>-1&&Math.abs(v3.x)<.97&&Math.abs(v3.y)<.90;node.style.display=(mode==='overview'&&visible)?'block':'none';if(visible){node.style.left=(v3.x*.5+.5)*innerWidth+'px';node.style.top=(-v3.y*.5+.5)*innerHeight+'px'}});
+ renderer.render(scene,camera);requestAnimationFrame(animate);
+}
+window.addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,innerWidth<780?1.35:1.8))});
+select(2);const load=$('#loader');load.style.display='none';animate();
+</script>
+<script>setTimeout(()=>{const el=document.getElementById('loader');if(el&&getComputedStyle(el).display!=='none'){el.querySelector('p').textContent='The 3D engine could not load. Check that WebGL is enabled and that the device has an internet connection.';el.querySelector('.spinner').style.display='none';el.querySelector('button').style.display='block';}},12000);</script>
+</body>
+</html>
