@@ -1,0 +1,85 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Real Kashi · Content Curator (Local Export Only)</title><link href="./assets/style.css" rel="stylesheet"><style>body{min-height:100dvh;overflow:auto}.admin{max-width:1100px;margin:auto;padding:22px}.admin-grid{display:grid;grid-template-columns:260px 1fr;gap:18px}.admin section{border:1px solid #ffffff34;border-radius:15px;padding:18px;background:#0d2536}label{display:grid;gap:5px;color:#eee;font-size:12px;margin:11px 0}input,textarea,select{width:100%;border-radius:8px;padding:10px;background:#1b3549;border:1px solid #ffffff38;color:#fff;font:inherit}textarea{min-height:100px}select{height:42px}.preview{max-height:200px;overflow:auto;border:1px solid #ffffff33;padding:9px;border-radius:10px}.preview img{width:110px;height:80px;object-fit:cover;border-radius:5px;margin:4px}.danger{color:#f8b3ac}.notice{background:#2b3b3a;border:1px solid #c7aa68;border-radius:10px;padding:14px;line-height:1.6;font-size:13px}.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:10px 0}@media(max-width:720px){.admin-grid{grid-template-columns:1fr}.admin{padding:12px}}</style></head>
+<body><main class="admin"><a href="./" class="brand" style="margin-bottom:18px">← Back to Real Kashi Journey</a><h1 style="font:500 32px Georgia,serif">Real Kashi · Content Curator</h1>
+<p class="notice"><strong>Draft export only — no server credentials.</strong> This browser-based editorial workspace changes an in-memory copy and lets you download checked JSON. It does <strong>not</strong> write to GitHub or the production database. Only an approved maintainer should review and commit exported data. All submitted photographs must have source, photographer and licence.</p>
+<div class="row"><label style="margin:0">Import reviewed JSON <input id="import" type="file" accept="application/json,.json"></label><button id="export" class="button primary">Validate & Download JSON</button><button id="reset" class="button">Reset to published snapshot</button></div>
+<div id="summary" class="footnote" role="status"></div><div class="admin-grid"><section><h2>Landmark records</h2><input id="filter" placeholder="Find stop"><div class="place-list" id="records" style="max-height:70vh;overflow:auto"></div></section>
+<section><h2 id="editing">Edit stop</h2>
+<label>English name <input id="name"></label><label>Hindi name <input id="hi"></label>
+<div class="row"><label>Latitude <input id="lat" type="number" step="any"></label><label>Longitude <input id="lng" type="number" step="any"></label></div>
+<p class="footnote">Leave coordinates blank if unverified. Do not estimate locations manually.</p>
+<label>Location background <textarea id="summaryText"></textarea></label><label>What to see <textarea id="features"></textarea></label>
+<label>Coordinates / history source URL <input id="source" type="url"></label>
+<h3>Photographs</h3><p class="footnote">One record per image. Include verified site, photographer and exact rights information. Unreviewed results must not be mislabelled.</p><div id="photos"></div>
+<button id="addPhoto" class="button">+ Add photograph</button>
+<div class="preview" id="preview"></div>
+<div class="row"><button id="save" class="button primary">Apply edits to draft</button><span id="result" aria-live="polite" class="footnote"></span></div>
+</section></div></main>
+<script>
+(function(){
+const $=x=>document.getElementById(x);let data=null,active=0;
+const safeUrl=x=>{try{const u=new URL(x,location.href);return ['https:','http:'].includes(u.protocol)||u.pathname.includes('/assets/images/')?u.href:''}catch{return ''}};
+async function load(){
+ const res=await fetch('./data/places.json',{cache:'no-store'});if(!res.ok)throw Error('Unable to read published data');
+ data=await res.json();active=0;draw();
+}
+function draw(){
+ $('records').replaceChildren();
+ data.places.forEach((p,i)=>{if(!$('filter').value||p.name.toLowerCase().includes($('filter').value.toLowerCase())){const b=document.createElement('button');b.textContent=(i+1)+'. '+p.name;b.classList.toggle('active',i===active);b.onclick=()=>{apply();active=i;draw()};$('records').append(b)}});
+ const p=data.places[active];$('editing').textContent='Edit '+p.name;
+ for(const id of ['name','hi','source'])$(id).value=p[id]||'';
+ $('lat').value=p.lat??'';$('lng').value=p.lng??'';$('summaryText').value=p.summary||'';$('features').value=p.whatToSee||'';
+ $('photos').replaceChildren();
+ p.photos.forEach(x=>addRow(x));
+ stats();$('result').textContent='';
+}
+function addRow(p={}){
+ const row=document.createElement('div');row.style.cssText='border:1px solid #ffffff22;border-radius:9px;padding:8px;margin:9px 0';
+ for(const field of ['url','caption','credit','source','license']){
+  const label=document.createElement('label');label.textContent=field;
+  const input=document.createElement('input');input.dataset.field=field;input.value=p[field]||'';label.append(input);row.append(label);
+ }
+ const approved=document.createElement('label');approved.textContent='Image subject verified';
+ const cb=document.createElement('input');cb.type='checkbox';cb.dataset.field='verifiedSubject';cb.checked=p.verifiedSubject===true;cb.style.width='auto';approved.append(cb);row.append(approved);
+ const del=document.createElement('button');del.textContent='Delete photograph';del.className='button';del.onclick=()=>row.remove();row.append(del);$('photos').append(row);
+}
+function apply(){
+ const p=data.places[active];
+ p.name=$('name').value.trim();p.hi=$('hi').value.trim();p.source=$('source').value.trim();
+ p.summary=$('summaryText').value.trim();p.whatToSee=$('features').value.trim();
+ const lat=$('lat').value,lng=$('lng').value;p.lat=lat===''?null:Number(lat);p.lng=lng===''?null:Number(lng);
+ p.positionQuality=p.lat!==null&&p.lng!==null?'mapped-reference':'awaiting-confirmation';
+ p.photos=[...$('photos').children].map(el=>{
+  const o={};el.querySelectorAll('input').forEach(inp=>{o[inp.dataset.field]=inp.type==='checkbox'?inp.checked:inp.value.trim()});return o;
+ }).filter(p=>p.url);
+ $('result').textContent='Draft updated locally';stats();
+}
+function stats(){
+ const geoc=data.places.filter(x=>Number.isFinite(x.lat)&&Number.isFinite(x.lng)).length,photos=data.places.reduce((n,p)=>n+p.photos.length,0);
+ $('summary').textContent=data.places.length+' major stops; '+geoc+' positioned; '+photos+' curated image records; '+data.traditionalGhats.length+' traditional ghat names.';
+}
+function validate(){
+ if(!data||!data.places.length)throw Error('Empty data.');
+ const ids=new Set();
+ for(const p of data.places){
+  if(!p.name||!p.id||ids.has(p.id))throw Error('Every place must have a unique ID and a name.');
+  ids.add(p.id);
+  if((p.lat===null)!==(p.lng===null))throw Error('Latitude and longitude must both be set or both blank for '+p.name);
+  if(p.lat!==null&&!(p.lat>=24.8&&p.lat<=25.8&&p.lng>=82.5&&p.lng<=83.5))throw Error('Coordinates outside the Varanasi region for '+p.name);
+  if(!safeUrl(p.source))throw Error('Missing valid source link for '+p.name);
+  for(const im of p.photos){
+   if(!im.url||!im.caption||!im.credit||!im.source||!im.license)throw Error('Photo metadata incomplete for '+p.name);
+   if(!safeUrl(im.url)||!safeUrl(im.source))throw Error('Unsafe or invalid image URL for '+p.name);
+  }
+ }
+ if(data.traditionalGhats.length!==84)throw Error('Expected traditional 84-ghat directory.');
+ return true;
+}
+$('save').onclick=()=>{apply();draw()};
+$('addPhoto').onclick=()=>addRow({});
+$('filter').oninput=()=>{$('records').replaceChildren();data.places.forEach((p,i)=>{if(p.name.toLowerCase().includes($('filter').value.toLowerCase())){const b=document.createElement('button');b.textContent=(i+1)+'. '+p.name;b.onclick=()=>{apply();active=i;draw()};$('records').append(b)}})};
+$('export').onclick=()=>{try{apply();validate();const out=JSON.stringify(data,null,2)+'\n';const blob=new Blob([out],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='punya-ghats-v2-reviewed-draft.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),3000);$('result').textContent='Draft JSON exported. Review and commit before publication.'}catch(err){$('result').textContent='Validation error: '+err.message;$('result').className='danger'}};
+$('import').onchange=async e=>{try{const txt=await e.target.files[0].text();const obj=JSON.parse(txt);if(!Array.isArray(obj.places)||!Array.isArray(obj.traditionalGhats))throw Error('Incorrect JSON structure');data=obj;active=0;validate();draw()}catch(err){$('summary').textContent='Import failed: '+err.message}};
+$('reset').onclick=()=>load().catch(e=>$('summary').textContent=e.message);
+load().catch(e=>$('summary').textContent=e.message);
+})();
+</script></body></html>
