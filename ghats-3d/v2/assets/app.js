@@ -253,10 +253,14 @@ async function maplibre(){
  throw Error('The map library could not load from its available hosts.');
 }
 async function initMap(){
+ $('mapFallback').classList.remove('show');
+ $('map').closest('.map-area')?.classList.remove('map-failed');
+ $('retryMap').disabled=true;
+ status('Opening geographic map…');
  try{
   const lib=await maplibre();
   if(state.map){state.map.remove();state.map=null;state.markers=[]}
-  if(!lib.supported()){throw Error('This browser currently does not provide WebGL for interactive maps.')}
+  if(typeof lib.Map!=='function'){throw Error('The downloaded mapping library is incomplete. Please retry the map.')}
   const map=new lib.Map({container:'map',style:createMapStyle(state.satellite),center:[83.014,25.310],zoom:12.1,attributionControl:true,hash:false,dragRotate:true,pitch:state.tilt?56:0,maxPitch:70});
   state.map=map;
   map.addControl(new lib.NavigationControl({visualizePitch:true}),'top-right');
@@ -291,13 +295,17 @@ async function initMap(){
     });
     fitMap();
     $('mapFallback').classList.remove('show');
+    $('map').closest('.map-area')?.classList.remove('map-failed');
     status('Map ready · Real position markers');
   });
   map.on('error',e=>{console.warn('Map tile/provider issue',e?.error||e)});
  }catch(err){
    $('mapFallback').classList.add('show');
-   $('mapFailureText').textContent='Map unavailable: '+err.message+'. Location descriptions and galleries are still available.';
+   $('map').closest('.map-area')?.classList.add('map-failed');
+   $('mapFailureText').textContent='The interactive map could not open ('+(err?.message||'unknown error')+'). You can still browse all landmark galleries.';
    status('Photo and landmark mode · map unavailable');
+ }finally{
+   $('retryMap').disabled=false;
  }
 }
 function fitMap(){
