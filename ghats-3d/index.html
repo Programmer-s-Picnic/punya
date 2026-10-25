@@ -517,7 +517,7 @@ function setMode(next){
  else if(next==='boat')cruise=selected/(zones.length-1);
  showIntro(false);
 }
-function visit(i){select(i);if(mode==='overview')setMode('walk');else if(mode==='walk'){player.x=zones[i].x;player.z=i===0||i===zones.length-1?0:-10;player.y=getGround(player.z)+1.7;player.yaw=Math.PI;player.pitch=-.1}else cruise=i/5}
+function visit(i){select(i);if(mode==='overview')setMode('walk');else if(mode==='walk'){player.x=zones[i].x;player.z=i===0||i===zones.length-1?0:-10;player.y=groundAt(player.x,player.z)+1.7;player.yaw=Math.PI;player.pitch=-.1}else cruise=i/(zones.length-1)}
 function reset(){select(0);mode='overview';document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));$('#joystick').style.display='none';cruise=0;showIntro(true)}
 $('#start').addEventListener('click',()=>setMode('walk'));$('#reset').addEventListener('click',reset);document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.mode)));
 $('#time').addEventListener('click',()=>{dusk=!dusk;$('#time').textContent=dusk?'☾ Evening':'☀ Sunrise';$('#time').setAttribute('aria-pressed',String(dusk));scene.background.setHex(dusk?0x34405c:0x9fc4da);scene.fog.color.setHex(dusk?0x3e465f:0xacc9db);ambient.intensity=dusk?1.08:2.1;sun.intensity=dusk?1.1:2.55;sun.color.setHex(dusk?0xff916a:0xffdfaa);waterMaterial.color.setHex(dusk?0x325a7a:0x4b94a4);riverLamps.forEach(l=>l.visible=dusk)});
