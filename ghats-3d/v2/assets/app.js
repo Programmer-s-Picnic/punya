@@ -1,6 +1,6 @@
 (()=>{'use strict';
 const $=id=>document.getElementById(id);
-const state={data:null,index:0,slideIndex:0,photos:[],map:null,markers:[],routeTimer:null,slideTimer:null,tab:'major',lang:'en',satellite:false,tilt:false,externalCache:new Map(),loadToken:0,booted:false};
+const state={data:null,index:0,slideIndex:0,photos:[],map:null,markers:[],routeTimer:null,slideTimer:null,tab:'major',lang:'en',satellite:false,tilt:false,externalCache:new Map(),loadToken:0,booted:false,activePlaceId:null,galleryPlaceName:''};
 const rad=Math.PI/180, DEG2KM=6371.0088;
 const toPoint=p=>p&&Number.isFinite(p.lat)&&Number.isFinite(p.lng)?[p.lng,p.lat]:null;
 const hav=(a,b)=>{
@@ -23,7 +23,7 @@ function chooseImage(photo){
  const label=document.createElement('span');
  label.textContent=(photo.caption||'Photograph')+' · '+(photo.credit||'Contributor')+' · ';
  const link=document.createElement('a');link.textContent=photo.license==='Existing site asset'?'Original collection':'Original file / licence';
- link.href=photo.source||outerLink(state.data.places[state.index].name);
+ link.href=photo.source||outerLink(state.galleryPlaceName);
  link.target='_blank';link.rel='noopener noreferrer';
  $('photoCredit').append(label,link);
 }
@@ -76,9 +76,9 @@ function openPhoto(){
  if(!state.photos.length)return;stopTour();stopSlides();
  const p=state.photos[state.slideIndex],modal=$('photoModal');
  $('modalImage').src=p.url;$('modalImage').alt=p.caption;
- $('modalHeading').textContent=state.data.places[state.index].name+' · Photo '+(state.slideIndex+1);
+ $('modalHeading').textContent=state.galleryPlaceName+' · Photo '+(state.slideIndex+1);
  $('modalCaption').textContent=(p.caption||'Photograph')+' · '+(p.credit||'Credit pending')+'. Source licences must be checked.';
- $('modalSource').href=p.source||outerLink(state.data.places[state.index].name);
+ $('modalSource').href=p.source||outerLink(state.galleryPlaceName);
  modal.classList.add('open');modal.setAttribute('aria-hidden','false');$('closeModal').focus();
 }
 function closeModal(id){
@@ -91,7 +91,7 @@ function choose(index,fromTour=false){
  if(!fromTour)stopTour();
  stopSlides();
  state.index=index;state.slideIndex=0;
- const p=places[index];
+ const p=places[index];state.activePlaceId=p.id;state.galleryPlaceName=p.name;
  $('stopType').textContent=(p.kind==='temple'?'SOUTHERN TEMPLE':p.kind==='confluence'?'NORTHERN CONFLUENCE':'HISTORIC GHAT')+' · STOP '+(index+1);
  $('stopName').textContent=state.lang==='hi'&&p.hi?p.hi:p.name;
  $('stopHindi').textContent=state.lang==='hi'?p.name:p.hi;
@@ -131,7 +131,7 @@ async function tryCommons(p,index){
  // Candidates supplement the gallery only after an image-search result passes simple title checks.
  // Never claim they have been verified. The request is only made for the visible location.
  if(state.externalCache.has(p.id)){
-  const cached=state.externalCache.get(p.id);if(state.index===index)appendCandidates(cached);return;
+  const cached=state.externalCache.get(p.id);if(state.activePlaceId===p.id)appendCandidates(cached);return;
  }
  const terms=p.kind==='temple'?'Shooltankeshwar Madhopur Varanasi':p.name+' Varanasi';
  const u='https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch='+encodeURIComponent('"'+terms+'"')+'&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata&iiurlwidth=900&format=json&origin=*';
@@ -151,7 +151,7 @@ async function tryCommons(p,index){
      return {url:d.thumburl,caption:e.title.replace(/^File:/,'').replaceAll('_',' '),credit:'Wikimedia Commons (unreviewed)',license:meta.LicenseShortName?.value||'See source',source:d.descriptionurl,reviewStatus:'candidate',verifiedSubject:false};
    });
   state.externalCache.set(p.id,list);
-  if(state.index===index)appendCandidates(list);
+  if(state.activePlaceId===p.id)appendCandidates(list);
  }catch(error){state.externalCache.set(p.id,[])}
  finally{clearTimeout(timeout)}
 }
@@ -188,6 +188,7 @@ function renderList(){
       if(state.tab==='all')renderList();
     }else{
       stopTour();stopSlides();
+      state.activePlaceId=g.id;state.galleryPlaceName=g.name;
       $('stopType').textContent='TRADITIONAL GHAT '+g.sequence+' · AWAITING SURVEY';
       $('stopName').textContent=g.name;
       $('stopHindi').textContent='';
@@ -198,6 +199,7 @@ function renderList(){
       $('openMaps').href=$('placeSource').href;
       $('commonsSearch').href=outerLink(g.name);
       state.photos=[];renderGallery();
+      void tryCommons({id:g.id,name:g.name,kind:'ghat'},state.index);
     }
    });
    list.append(button);
@@ -226,7 +228,7 @@ function createMapStyle(satellite){
  sources:{base:{type:'raster',tiles:satellite?
  ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}']:
  ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],tileSize:256,
- attribution:satellite?'Tiles © Esri and imagery contributors':'© OpenStreetMap contributors'}},
+ attribution:'Map data © OpenStreetMap contributors · Imagery © Esri and partners when enabled'}},
  layers:[{id:'base-layer',type:'raster',source:'base',minzoom:0,maxzoom:20}]};
 }
 async function maplibre(){
