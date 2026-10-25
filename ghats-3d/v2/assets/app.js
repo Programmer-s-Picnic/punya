@@ -1,5 +1,6 @@
 (()=>{'use strict';
 const $=id=>document.getElementById(id);
+let boatCtrl=null;
 const state={data:null,index:0,slideIndex:0,photos:[],map:null,markers:[],routeTimer:null,slideTimer:null,tab:'major',lang:'en',satellite:false,tilt:false,externalCache:new Map(),loadToken:0,booted:false,activePlaceId:null,galleryPlaceName:''};
 const rad=Math.PI/180, DEG2KM=6371.0088;
 const toPoint=p=>p&&Number.isFinite(p.lat)&&Number.isFinite(p.lng)?[p.lng,p.lat]:null;
@@ -68,12 +69,13 @@ function changePhoto(delta){
 function toggleSlides(){
  if(state.slideTimer){stopSlides();return}
  if(state.photos.length<2)return;
+ if(boatCtrl?.active)boatCtrl.pause('Boat paused for slideshow');
  stopTour();
  $('slideshow').textContent='❚❚ Pause';$('slideshow').setAttribute('aria-pressed','true');
  state.slideTimer=setInterval(()=>changePhoto(1),4200);
 }
 function openPhoto(){
- if(!state.photos.length)return;stopTour();stopSlides();
+ if(!state.photos.length)return;if(boatCtrl?.active)boatCtrl.pause('Boat paused for gallery');stopTour();stopSlides();
  const p=state.photos[state.slideIndex],modal=$('photoModal');
  $('modalImage').src=p.url;$('modalImage').alt=p.caption;
  $('modalHeading').textContent=state.galleryPlaceName+' · Photo '+(state.slideIndex+1);
@@ -85,10 +87,11 @@ function closeModal(id){
  const m=$(id);m.classList.remove('open');m.setAttribute('aria-hidden','true');
  if(id==='photoModal')$('modalImage').removeAttribute('src');
 }
-function choose(index,fromTour=false){
+function choose(index,fromTour=false,fromBoat=false){
  const places=state.data.places;
  index=Math.max(0,Math.min(places.length-1,index));
  if(!fromTour)stopTour();
+ if(boatCtrl?.active&&!fromBoat)boatCtrl.jumpTo(index);
  stopSlides();
  state.index=index;state.slideIndex=0;
  const p=places[index];state.activePlaceId=p.id;state.galleryPlaceName=p.name;
@@ -117,11 +120,11 @@ function choose(index,fromTour=false){
  state.photos=(p.photos||[]).map(x=>({...x}));
  renderGallery();
  refreshList();
- if(state.map&&toPoint(p)){
+ if(state.map&&toPoint(p)&&!(boatCtrl?.active)){
   state.map.flyTo({center:toPoint(p),zoom:p.kind==='temple'?12.9:15.8,pitch:state.tilt?59:0,bearing:state.tilt?22:0,speed:1.2,essential:false});
   state.markers.forEach((marker,j)=>marker.getElement().classList.toggle('active-marker',j===index));
  }
- else if(state.map&&!toPoint(p)){
+ else if(state.map&&!toPoint(p)&&!(boatCtrl?.active)){
   const last=places[places.length-2];state.map.flyTo({center:toPoint(last),zoom:14.3,pitch:state.tilt?59:0,essential:false});
  }
  if(location.hash!=='#'+encodeURIComponent(p.id))history.replaceState(null,'','#'+encodeURIComponent(p.id));
@@ -188,6 +191,7 @@ function renderList(){
       if(state.tab==='all')renderList();
     }else{
       stopTour();stopSlides();
+      if(boatCtrl?.active)boatCtrl.pause('Boat paused while inspecting the ghat directory');
       state.activePlaceId=g.id;state.galleryPlaceName=g.name;
       $('stopType').textContent='TRADITIONAL GHAT '+g.sequence+' · AWAITING SURVEY';
       $('stopName').textContent=g.name;
@@ -214,6 +218,7 @@ function stopTour(){
 }
 function toggleTour(){
  if(state.routeTimer){stopTour();return}
+ if(boatCtrl?.active)boatCtrl.exit();
  stopSlides();closeModal('photoModal');
  if(state.index>=state.data.places.length-1)choose(0,true);
  $('play').textContent='❚❚ Pause journey';$('play').setAttribute('aria-pressed','true');
@@ -294,12 +299,14 @@ async function initMap(){
       state.markers.push(marker);
     });
     fitMap();
+    boatCtrl?.setupMap(map,lib);
     $('mapFallback').classList.remove('show');
     $('map').closest('.map-area')?.classList.remove('map-failed');
-    status('Map ready · Real position markers');
+    status(boatCtrl?.active?'Boat map ready · virtual river cruise':'Map ready · Real position markers');
   });
   map.on('error',e=>{console.warn('Map tile/provider issue',e?.error||e)});
  }catch(err){
+   boatCtrl?.unavailable();
    $('mapFallback').classList.add('show');
    $('map').closest('.map-area')?.classList.add('map-failed');
    $('mapFailureText').textContent='The interactive map could not open ('+(err?.message||'unknown error')+'). You can still browse all landmark galleries.';
@@ -339,7 +346,7 @@ function wire(){
  $('slideshow').onclick=toggleSlides;$('openPhoto').onclick=openPhoto;
  $('closeModal').onclick=()=>closeModal('photoModal');
  $('photoModal').onclick=e=>{if(e.target.id==='photoModal')closeModal('photoModal')};
- $('helpBtn').onclick=()=>{$('helpModal').classList.add('open');$('helpModal').setAttribute('aria-hidden','false');stopTour()};
+ $('helpBtn').onclick=()=>{if(boatCtrl?.active)boatCtrl.pause('Boat paused while viewing help');$('helpModal').classList.add('open');$('helpModal').setAttribute('aria-hidden','false');stopTour()};
  $('closeHelp').onclick=()=>closeModal('helpModal');
  $('helpModal').onclick=e=>{if(e.target.id==='helpModal')closeModal('helpModal')};
  window.addEventListener('keydown',e=>{
@@ -375,6 +382,13 @@ async function init(){
   const data=await response.json();
   if(!Array.isArray(data.places)||!Array.isArray(data.traditionalGhats)||data.places.length<2)throw Error('Location file is invalid.');
   state.data=data;
+  if(window.PunyaBoat?.create)boatCtrl=window.PunyaBoat.create({
+    places:data.places,
+    onStop:i=>choose(i,true,true),
+    status,
+    stopOtherTour:stopTour,
+    openGallery:openPhoto
+  });
   $('progress').max=String(data.places.length-1);
   const raw=decodeURIComponent(location.hash.slice(1));
   const ix=data.places.findIndex(p=>p.id===raw);
@@ -386,6 +400,7 @@ async function init(){
   $('mapFailureText').textContent='Location data failed to load: '+err.message+'. Please reload the page.';
   $('stopDescription').textContent='The route data is unavailable. Use the existing Punya Yatra photo gallery as an alternative.';
   status('Location data unavailable');
+  $('boatLaunch').disabled=true;$('footerBoat').disabled=true;
  }
 }
 window.addEventListener('hashchange',()=>{
