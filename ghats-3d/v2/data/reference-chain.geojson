@@ -1,0 +1,327 @@
+{
+  "type": "FeatureCollection",
+  "name": "Varanasi major-stop reference chain — NOT a navigable route",
+  "metadata": {
+    "referenceOnly": true,
+    "travelRoutingVerified": false,
+    "geometryMethod": "Straight segments between sourced landmark coordinates. Distances are cumulative geodesic lower bounds.",
+    "totalGeodesicMinimumMetres": 17582,
+    "source": "ghats-3d/v2/data/places.json",
+    "warning": "Do not use for boat navigation, pedestrian directions, river safety, or exact ghat boundaries."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "major-stops-reference",
+        "name": "Reference chain: Shooltankeshwar to Adi Keshav",
+        "lengthLowerBoundMetres": 17582
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            82.9073936,
+            25.2400137
+          ],
+          [
+            83.00676167,
+            25.28864778
+          ],
+          [
+            83.00634,
+            25.29024
+          ],
+          [
+            83.00712,
+            25.29522
+          ],
+          [
+            83.00719,
+            25.29832
+          ],
+          [
+            83.00728,
+            25.29905
+          ],
+          [
+            83.00954,
+            25.30522
+          ],
+          [
+            83.01065,
+            25.30693
+          ],
+          [
+            83.01099,
+            25.30766
+          ],
+          [
+            83.01287,
+            25.30966
+          ],
+          [
+            83.01402,
+            25.31077
+          ],
+          [
+            83.01543,
+            25.31207
+          ],
+          [
+            83.01799,
+            25.31502
+          ],
+          [
+            83.03104,
+            25.32341
+          ],
+          [
+            83.0428259,
+            25.328868
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "shool",
+        "name": "Shooltankeshwar Mahadev",
+        "positionQuality": "mapped-reference",
+        "source": "https://sannidhi.net/sannidhi/shree-shool-tankeshwar-mahadev-temple-madhopur-varanasi-uttar-pradesh/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          82.9073936,
+          25.2400137
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "assi",
+        "name": "Assi Ghat",
+        "positionQuality": "mapped-reference",
+        "source": "https://en.wikipedia.org/wiki/Assi_Ghat"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          83.00676167,
+          25.28864778
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "tulsi",
+        "name": "Tulsi Ghat",
+        "positionQuality": "mapped-reference",
+        "source": "https://mapcarta.com/N988809665"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          83.00634,
+          25.29024
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "chetsingh",
+        "name": "Chet Singh Ghat",
+        "positionQuality": "mapped-reference",
+        "source": "https://mapcarta.com/N11461545077"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          83.00712,
+          25.29522
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "harishchandra",
+        "name": "Harishchandra Ghat",
+        "positionQuality": "mapped-reference",
+        "source": "https://mapcarta.com/N1538127091"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          83.00719,
+          25.29832
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "kedar",
+        "name": "Kedar Ghat",
+        "positionQuality": "mapped-reference",
+        "source": "https://mapcarta.com/N988809596"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          83.00728,
+          25.29905
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "darbhanga",
+        "name": "Darbhanga Ghat",
+        "positionQuality": "mapped-reference",
+        "source": "https://mapcarta.com/N1538127089"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          83.00954,
+          25.30522
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "dashashwamedh",
+        "name": "Dashashwamedh Ghat",
+        "positionQuality": "mapped-reference",
+        "source": "https://mapcarta.com/N11690112169"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          83.01065,
+          25.30693
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "manmandir",
+        "name": "Man Mandir Ghat",
+        "positionQuality": "mapped-reference",
+        "source": "https://mapcarta.com/33342304"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          83.01099,
+          25.30766
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "lalita",
+        "name": "Lalita Ghat",
+        "positionQuality": "mapped-reference",
+        "source": "https://mapcarta.com/N1538127096"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          83.01287,
+          25.30966
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "manikarnika",
+        "name": "Manikarnika Ghat",
+        "positionQuality": "mapped-reference",
+        "source": "https://mapcarta.com/33342302"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          83.01402,
+          25.31077
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "scindia",
+        "name": "Scindia Ghat",
+        "positionQuality": "mapped-reference",
+        "source": "https://mapcarta.com/N1538127126"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          83.01543,
+          25.31207
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "panchganga",
+        "name": "Panchganga Ghat",
+        "positionQuality": "mapped-reference",
+        "source": "https://mapcarta.com/N1538127113"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          83.01799,
+          25.31502
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rajghat",
+        "name": "Raj Ghat",
+        "positionQuality": "mapped-reference",
+        "source": "https://mapcarta.com/33342214"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          83.03104,
+          25.32341
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "adikeshav",
+        "name": "Adi Keshav Ghat",
+        "positionQuality": "mapped-reference",
+        "source": "https://varanasitemples.in/category/vishnu-temples/adi-keshav/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          83.0428259,
+          25.328868
+        ]
+      }
+    }
+  ]
+}
