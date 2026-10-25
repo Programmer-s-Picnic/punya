@@ -105,10 +105,47 @@
   <img id="expandedPhoto" class="photo-view" alt="">
   <div class="photo-footer"><p id="expandedPhotoCaption"></p><a id="expandedPhotoSource" target="_blank" rel="noopener noreferrer">Original photograph and licence</a></div>
 </div><div class="credit">Artistic 3D interpretation · Not to scale<br>Developed and maintained by Champak Roy</div>
-<div id="loader"><div><div class="spinner"></div><h2>Preparing the ghats of Kashi</h2><p>Building the river, carved steps and old city skyline in 3D…</p><button id="retry" class="cta" onclick="location.reload()">Try again</button></div></div>
+<div id="loader"><div><div class="spinner"></div><h2>Preparing the ghats of Kashi</h2><p>Building the river, carved steps and old city skyline in 3D…</p><button id="retry" class="cta" onclick="location.reload()">Try again</button><a id="photoFallback" href="../gallery/" class="cta" style="display:none;background:#263e55;border:1px solid #ffffff60;color:#fff;margin-left:6px">View Kashi photos</a></div></div>
 <div id="help" role="dialog" aria-modal="true" aria-labelledby="helpTitle"><div class="help-card"><h2 id="helpTitle">How to explore Kashi</h2><p>Choose a ghat from the bottom ribbon or use any viewing mode.</p><ul><li><strong>Walk:</strong> W / A / S / D or arrow up/down + A/D to move; drag anywhere on the scene to turn the camera.</li><li><strong>Mobile:</strong> Move the round joystick with your left thumb; drag on the right side of the screen to look around.</li><li><strong>River cruise:</strong> Enjoy a moving boat-side view of the temples and steps.</li><li><strong>Sunrise / evening:</strong> Change the atmosphere at the top right. Select a ghat to jump directly there.</li></ul><p>The 84-ghat directory follows the traditional Assi-to-Adi Keshav sequence. Shooltankeshwar is a separate southern stop. <a href="https://kashi.gov.in/listing-details/shooltankeshwar-temple" target="_blank" rel="noopener noreferrer">Southern temple reference</a> · <a href="https://kashi.gov.in/listing-details/adi-keshav-ghat" target="_blank" rel="noopener noreferrer">Northern confluence reference</a>.</p><p><strong>Note:</strong> This journey spans Shooltankeshwar to the Ganga–Varuna Sangam through the 84 traditional riverfront ghats. It is a stylised representation, not a geospatial survey or navigation map. Sacred sites are presented respectfully.</p><button id="closeHelp" class="cta">Continue exploring →</button></div></div>
+<script>
+/* Error bridge is intentionally plain JavaScript so it works even if the 3D module fails to import. */
+(function(){
+  const showError=function(message,detail){
+    if(window.__ghatsReady)return;
+    const loader=document.getElementById('loader');
+    if(!loader)return;
+    loader.style.display='grid';
+    loader.querySelector('h2').textContent='3D scene could not start';
+    loader.querySelector('.spinner').style.display='none';
+    loader.querySelector('p').textContent=message;
+    document.getElementById('retry').style.display='inline-flex';
+    document.getElementById('photoFallback').style.display='inline-flex';
+    if(detail){loader.setAttribute('data-error-details',String(detail).slice(0,240));console.warn('Ghats startup problem:',detail);}
+  };
+  window.showGhatError=showError;
+  window.addEventListener('error',function(e){
+    if(window.__ghatsReady)return;
+    const detail=e.error?.message||e.message||'JavaScript startup error';
+    showError('The 3D scene encountered a startup problem. Try again, or open the photographic Kashi gallery.',detail);
+  });
+  window.addEventListener('unhandledrejection',function(e){
+    if(window.__ghatsReady)return;
+    const detail=e.reason?.message||String(e.reason||'Asset loading error');
+    showError('The 3D library could not be loaded, or an asset failed. Try again, or view the photo gallery.',detail);
+  });
+  setTimeout(function(){
+    if(!window.__ghatsReady){
+      showError('The detailed 3D view is taking too long to load. You can retry or continue with the photo gallery.','3D startup exceeded 30 seconds');
+    }
+  },30000);
+})();
+</script>
 <script type="module">
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js';
+// A secondary host keeps the tour working if one CDN is unavailable.
+const THREE=await Promise.any([
+ import('https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js'),
+ import('https://unpkg.com/three@0.165.0/build/three.module.js')
+]);
 const $=s=>document.querySelector(s), clamp=THREE.MathUtils.clamp;
 const compact=matchMedia('(max-width:780px)').matches, reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
 const zones=[
@@ -523,11 +560,13 @@ function animate(){
   people.forEach((p,i)=>{p.g.position.x=p.startX+Math.sin(t*p.speed+p.phase)*p.wander;p.g.rotation.y=Math.sin(t*p.speed+p.phase)>.0?Math.PI/2:-Math.PI/2;p.g.position.y=getGround(p.z)+Math.abs(Math.sin(t*p.speed*5+i))*.025});
  }
  landmarks.forEach(({node,point})=>{v3.copy(point).project(camera);const visible=v3.z<1&&v3.z>-1&&Math.abs(v3.x)<.97&&Math.abs(v3.y)<.90&&Math.abs(point.x-zones[selected].x)<108;node.style.display=(mode==='overview'&&visible)?'block':'none';if(visible){node.style.left=(v3.x*.5+.5)*innerWidth+'px';node.style.top=(-v3.y*.5+.5)*innerHeight+'px'}});
- renderer.render(scene,camera);requestAnimationFrame(animate);
+ renderer.render(scene,camera);
+ if(!window.__ghatsReady){window.__ghatsReady=true;$('#loader').style.display='none';}
+ requestAnimationFrame(animate);
 }
 window.addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,innerWidth<780?1:1.65))});
-select(0);const load=$('#loader');load.style.display='none';animate();
+select(0);animate();
 </script>
-<script>setTimeout(()=>{const el=document.getElementById('loader');if(el&&getComputedStyle(el).display!=='none'){el.querySelector('p').textContent='The 3D engine could not load. Check that WebGL is enabled and that the device has an internet connection.';el.querySelector('.spinner').style.display='none';el.querySelector('button').style.display='block';}},12000);</script>
+
 </body>
 </html>
