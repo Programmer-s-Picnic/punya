@@ -114,3 +114,6 @@ a{color:#f3cc9a}.screen{height:100dvh;min-height:530px;display:grid;grid-templat
  .river-bow{animation:none!important}
  .river-photo{transition:none!important}
 }
+
+.river-view{touch-action:none;cursor:grab}.river-view:active{cursor:grabbing}
+.river-map-toggle{touch-action:manipulation;cursor:pointer}
