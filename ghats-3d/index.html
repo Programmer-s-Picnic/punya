@@ -35,21 +35,30 @@
 @media(max-width:780px){.top{padding:12px 14px}.brand strong{font-size:16px}.brand small{font-size:9px}.top-actions .chip:first-child{display:none}.banner{top:87px;left:18px;max-width:75vw}.banner h1{font-size:33px;margin:6px 0}.banner p{font-size:12px;max-width:250px;margin:6px 0}.banner .cta{padding:11px 15px;font-size:12px}.side{bottom:91px;left:12px;max-width:215px;min-width:0;padding:11px 12px;border-radius:14px}.side h2{font-size:19px;margin:3px 0}.side p{font-size:11px;line-height:1.45}.side .tip{display:none}.modes{right:12px;bottom:100px;gap:5px}.mode{min-width:92px;padding:9px}.mode b{font-size:12px}.mode span{display:none}.gbar{padding:12px 12px max(14px,env(safe-area-inset-bottom))}.gbar button{font-size:11px;padding:9px 12px}.credit{display:none}#joystick{left:22px;bottom:215px;width:104px;height:104px}#stick{left:30px;top:30px;width:44px;height:44px}.marker{font-size:9px;padding:4px 7px}}
 @media(max-width:390px){.banner p{display:none}.side{max-width:175px}.side p{display:none}.brand-mark{width:33px;height:33px}.top-actions{gap:5px}.chip{padding:9px 10px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+#routePanel{position:fixed;top:74px;right:16px;bottom:97px;z-index:15;display:none;flex-direction:column;gap:11px;width:min(390px,calc(100vw - 32px));background:rgba(12,28,47,.97);border:1px solid rgba(255,255,255,.25);border-radius:18px;padding:20px;box-shadow:0 25px 70px #0008;backdrop-filter:blur(20px)}
+#routePanel.open{display:flex}#routePanel .route-head{display:flex;justify-content:space-between;align-items:start;gap:12px}#routePanel small{color:#f5cf8a;font-size:10px;letter-spacing:.12em}#routePanel h2{font:500 29px/1.15 "Playfair Display",serif;margin:5px 0}#routePanel p{font-size:12px;color:#d2dae5;line-height:1.6;margin:0}
+#closeGhats{border:1px solid #ffffff66;border-radius:50%;color:white;background:#ffffff10;width:34px;height:34px;flex:none}
+#ghatSearch{background:#f6f2e9;color:#253648;border:0;border-radius:9px;font:inherit;font-size:14px;padding:11px;width:100%}
+#allGhats{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:5px;scrollbar-width:thin;scrollbar-color:#b08b69 transparent}
+#allGhats button{background:rgba(255,255,255,.07);border:1px solid #ffffff13;text-align:left;color:#f0e9df;padding:11px 12px;border-radius:9px;font-size:12px}
+#allGhats button:hover,#allGhats button:focus-visible{background:#e8bf8735;border-color:#e8bf8788}
+@media(max-width:780px){#routePanel{top:67px;bottom:76px;padding:15px}#routePanel h2{font-size:25px}.top-actions #showAllGhats{font-size:11px;padding:9px}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Walk the Ghats in 3D","url":"https://punyayatra.in/ghats-3d/","description":"An interactive artistic 3D interpretation of five Varanasi ghats, not a surveyed geographic reconstruction.","isPartOf":{"@type":"WebSite","name":"Punya Yatra","url":"https://punyayatra.in/"}}</script>
 </head>
 <body>
 <div id="scene" aria-label="Interactive 3D scene of the Varanasi riverfront"></div><div class="vignette"></div>
-<header class="top"><a href="../" class="brand" aria-label="Return to Punya Yatra home"><span class="brand-mark" aria-hidden="true">ॐ</span><span><strong>Punya Yatra</strong><small>Immersive Kashi</small></span></a><div class="top-actions"><button id="reset" class="chip" title="Return to starting view">↺ Reset view</button><button id="time" class="chip" aria-pressed="false" title="Switch between sunrise and evening">☀ Sunrise</button><button id="helpBtn" class="chip iconbtn" title="Help" aria-label="How to explore">?</button></div></header>
-<div class="banner" id="banner"><div class="eyebrow">The eternal city · Varanasi</div><h1>Walk beside<br><em>the Ganga.</em></h1><p>Discover the textures of Kashi: riverfront steps, temple spires, old havelis and gently moving boats.</p><button id="start" class="cta">Enter the ghats <span aria-hidden="true">→</span></button></div>
-<div id="markers" aria-label="Explore landmarks"></div>
+<header class="top"><a href="../" class="brand" aria-label="Return to Punya Yatra home"><span class="brand-mark" aria-hidden="true">ॐ</span><span><strong>Punya Yatra</strong><small>Immersive Kashi</small></span></a><div class="top-actions"><button id="reset" class="chip" title="Return to starting view">↺ Reset view</button><button id="showAllGhats" class="chip" aria-controls="routePanel" aria-expanded="false">84 Ghats</button><button id="time" class="chip" aria-pressed="false" title="Switch between sunrise and evening">☀ Sunrise</button><button id="helpBtn" class="chip iconbtn" title="Help" aria-label="How to explore">?</button></div></header>
+<div class="banner" id="banner"><div class="eyebrow">The sacred river journey · Varanasi</div><h1>Walk beside<br><em>the Ganga.</em></h1><p>Journey from Shooltankeshwar Mahadev past the 84 historic ghats to the sacred Ganga–Varuna Sangam.</p><button id="start" class="cta">Begin the journey <span aria-hidden="true">→</span></button></div>
+<div id="markers" aria-label="Explore landmarks"></div><aside id="routePanel" aria-label="Directory of 84 Varanasi ghats" aria-hidden="true"><div class="route-head"><div><small>THE GHATS IN SEQUENCE</small><h2>All 84 Ghats</h2></div><button id="closeGhats" aria-label="Close ghats directory">✕</button></div><p>South to north, Assi to Adi Keshav. Shooltankeshwar lies farther south; the confluence is the northern endpoint.</p><input id="ghatSearch" type="search" placeholder="Search a ghat (e.g. Kedar)" aria-label="Search all ghats"><div id="allGhats"></div><small>The 3D model is an artistic reconstruction; names and counts vary by source.</small></aside>
 <section class="side" aria-live="polite"><small id="areaType">YOUR VIRTUAL STOP</small><h2 id="areaName">Dashashwamedh Ghat</h2><p id="areaText">The ceremonial heart of Varanasi, known for its evening Ganga Aarti.</p><div class="tip" id="hint">Use A / D to move sideways, W / S to walk, and drag to look around.</div></section>
 <div class="modes" aria-label="Viewing modes"><button class="chip mode active" data-mode="overview"><b>◇ Aerial view</b><span>See the riverfront</span></button><button class="chip mode" data-mode="walk"><b>♙ Walk the steps</b><span>Explore freely</span></button><button class="chip mode" data-mode="boat"><b>≈ River cruise</b><span>See the ghats by boat</span></button></div>
 <nav id="ghatbar" class="gbar" aria-label="Visit a ghat"></nav>
 <div id="joystick" aria-label="Virtual walking joystick"><div id="stick"></div></div>
 <div id="status" role="status"></div><div class="credit">Artistic 3D interpretation · Not to scale<br>Developed and maintained by Champak Roy</div>
 <div id="loader"><div><div class="spinner"></div><h2>Preparing the ghats of Kashi</h2><p>Building the river, carved steps and old city skyline in 3D…</p><button id="retry" class="cta" onclick="location.reload()">Try again</button></div></div>
-<div id="help" role="dialog" aria-modal="true" aria-labelledby="helpTitle"><div class="help-card"><h2 id="helpTitle">How to explore Kashi</h2><p>Choose a ghat from the bottom ribbon or use any viewing mode.</p><ul><li><strong>Walk:</strong> W / A / S / D or arrow up/down + A/D to move; drag anywhere on the scene to turn the camera.</li><li><strong>Mobile:</strong> Move the round joystick with your left thumb; drag on the right side of the screen to look around.</li><li><strong>River cruise:</strong> Enjoy a moving boat-side view of the temples and steps.</li><li><strong>Sunrise / evening:</strong> Change the atmosphere at the top right. Select a ghat to jump directly there.</li></ul><p><strong>Note:</strong> This is an evocative, stylised reconstruction, not an exact 3D survey or a navigation map. Sacred sites are presented respectfully.</p><button id="closeHelp" class="cta">Continue exploring →</button></div></div>
+<div id="help" role="dialog" aria-modal="true" aria-labelledby="helpTitle"><div class="help-card"><h2 id="helpTitle">How to explore Kashi</h2><p>Choose a ghat from the bottom ribbon or use any viewing mode.</p><ul><li><strong>Walk:</strong> W / A / S / D or arrow up/down + A/D to move; drag anywhere on the scene to turn the camera.</li><li><strong>Mobile:</strong> Move the round joystick with your left thumb; drag on the right side of the screen to look around.</li><li><strong>River cruise:</strong> Enjoy a moving boat-side view of the temples and steps.</li><li><strong>Sunrise / evening:</strong> Change the atmosphere at the top right. Select a ghat to jump directly there.</li></ul><p><strong>Note:</strong> This journey spans Shooltankeshwar to the Ganga–Varuna Sangam through the 84 traditional riverfront ghats. It is a stylised representation, not a geospatial survey or navigation map. Sacred sites are presented respectfully.</p><button id="closeHelp" class="cta">Continue exploring →</button></div></div>
 <script type="module">
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js';
 const $=s=>document.querySelector(s), clamp=THREE.MathUtils.clamp;
@@ -295,6 +304,37 @@ function select(i){
  selected=i;$('#areaName').textContent=zones[i].name;$('#areaText').textContent=zones[i].about;
  [...$('#ghatbar').children].forEach((b,j)=>{b.classList.toggle('active',i===j);b.setAttribute('aria-current',i===j?'location':'false')});
 }
+
+const ghatDirectoryNames='Assi|Ganga Mahal (south)|Rewa|Tulsi|Bhadaini|Janaki|Mata Anandamayi|Vaccharaja|Jain|Nishad|Prabhu|Panchkota|Chet Singh|Niranjani|Mahanirvani|Shivala|Gularia|Dandi|Hanuman|Prachin Hanuman|Karnataka|Harishchandra|Lali|Vijayanagaram|Kedar|Chauki|Kshemeshwar|Mansarovar|Narad|Raja|Khori|Pandey|Sarveshwar|Digpatia|Chausatthi|Rana Mahal|Darbhanga|Munshi|Ahilyabai|Sheetla|Dashashwamedh|Prayag|Rajendra Prasad|Man Mandir|Tripura Bhairavi|Mir|Phuta|Nepali|Lalita|Bauli|Jalasen|Khirki|Manikarnika|Bajirao|Scindia|Sankatha|Ganga Mahal (north)|Bhonsale|Naya|Ganesh|Mehta|Ram|Jatara|Raja Gwalior|Mangala Gauri|Venimadhav|Panchganga|Durga|Brahma|Bundi Parakota|Adi Sheetla|Lala|Hanuman Garhi|Gai|Badri Narayan|Trilochan|Gola|Nandeshwar|Sakka|Telianala|Naya (north)|Prahlad|Raj Ghat|Adi Keshav'.split('|');
+function renderGhatDirectory(){
+ const host=$('#allGhats'),q=$('#ghatSearch').value.trim().toLowerCase();host.replaceChildren();
+ ghatDirectoryNames.forEach((name,i)=>{
+  if(q&&!name.toLowerCase().includes(q))return;
+  const button=document.createElement('button');button.textContent=String(i+1).padStart(2,'0')+' · '+name+' Ghat';
+  button.addEventListener('click',()=>{
+   const x=-273+i*546/(ghatDirectoryNames.length-1);
+   let near=1;
+   zones.forEach((z,j)=>{if(Math.abs(z.x-x)<Math.abs(zones[near].x-x))near=j});
+   visit(near);
+   if(mode==='walk'){player.x=x;player.z=-10;player.y=groundAt(x,-10)+1.72;}
+   if(mode==='boat')cruise=(x+335)/670;
+   $('#areaType').textContent='TRADITIONAL GHAT '+(i+1)+' / 84';
+   $('#areaName').textContent=name+' Ghat';
+   $('#areaText').textContent='Explore this riverfront section in a stylised 3D scene. Individual structures and distances are not to scale.';
+   $('#routePanel').classList.remove('open');$('#routePanel').setAttribute('aria-hidden','true');$('#showAllGhats').setAttribute('aria-expanded','false');
+  });
+  host.appendChild(button);
+ });
+ if(!host.childElementCount){const p=document.createElement('p');p.textContent='No matching ghat. Try a different spelling.';host.appendChild(p);}
+}
+$('#showAllGhats').addEventListener('click',()=>{
+ const open=!$('#routePanel').classList.contains('open');
+ $('#routePanel').classList.toggle('open',open);$('#routePanel').setAttribute('aria-hidden',String(!open));$('#showAllGhats').setAttribute('aria-expanded',String(open));
+ if(open){renderGhatDirectory();$('#ghatSearch').focus();}
+});
+$('#closeGhats').addEventListener('click',()=>{$('#routePanel').classList.remove('open');$('#routePanel').setAttribute('aria-hidden','true');$('#showAllGhats').setAttribute('aria-expanded','false')});
+$('#ghatSearch').addEventListener('input',renderGhatDirectory);
+
 const player={x:0,z:-9,y:0,yaw:Math.PI,pitch:-.08};
 const key=new Set(),joy={x:0,y:0};let joyPointer=null;
 function showIntro(visible){$('#banner').style.display=visible?'block':'none'}
@@ -311,7 +351,7 @@ function reset(){select(2);mode='overview';document.querySelectorAll('[data-mode
 $('#start').addEventListener('click',()=>setMode('walk'));$('#reset').addEventListener('click',reset);document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.mode)));
 $('#time').addEventListener('click',()=>{dusk=!dusk;$('#time').textContent=dusk?'☾ Evening':'☀ Sunrise';$('#time').setAttribute('aria-pressed',String(dusk));scene.background.setHex(dusk?0x34405c:0x9fc4da);scene.fog.color.setHex(dusk?0x3e465f:0xacc9db);ambient.intensity=dusk?1.08:2.1;sun.intensity=dusk?1.1:2.55;sun.color.setHex(dusk?0xff916a:0xffdfaa);waterMaterial.color.setHex(dusk?0x325a7a:0x4b94a4);riverLamps.forEach(l=>l.visible=dusk)});
 $('#helpBtn').addEventListener('click',()=>$('#help').classList.add('open'));$('#closeHelp').addEventListener('click',()=>$('#help').classList.remove('open'));$('#help').addEventListener('click',e=>{if(e.target.id==='help')$('#help').classList.remove('open')});
-window.addEventListener('keydown',e=>{if(e.key==='Escape'){$('#help').classList.remove('open');dragging=false}if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key))e.preventDefault();key.add(e.key.toLowerCase())});
+window.addEventListener('keydown',e=>{if(e.key==='Escape'){$('#help').classList.remove('open');$('#routePanel').classList.remove('open');$('#routePanel').setAttribute('aria-hidden','true');dragging=false}if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key))e.preventDefault();key.add(e.key.toLowerCase())});
 window.addEventListener('keyup',e=>key.delete(e.key.toLowerCase()));window.addEventListener('blur',()=>key.clear());
 const canvas=renderer.domElement;
 canvas.addEventListener('pointerdown',e=>{if(mode!=='walk')return;dragging=true;startingX=e.clientX;startingY=e.clientY;canvas.setPointerCapture(e.pointerId)});
