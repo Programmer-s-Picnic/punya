@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-25-v2-preview",
+  "version": "2026-10-25-v2b",
   "publication": "preview",
   "routeQuality": "Reference landmark chain, NOT a surveyed boat or walking route",
   "sourceNote": "Coordinates linked to their source pages. Segments between points are straight geodesic minimum distances only. Do not infer safe navigation or accessible walking paths.",
@@ -32,11 +32,12 @@
       "photos": [
         {
           "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Assi_Ghat%2C_Varanasi.jpg?width=1100",
-          "caption": "Assi Ghat — Wikimedia Commons file",
-          "credit": "Wikimedia Commons (see original file for author and licence)",
+          "caption": "Assi Ghat — original photograph by Watashiwa.vikram",
+          "credit": "Watashiwa.vikram",
           "source": "https://commons.wikimedia.org/wiki/File:Assi_Ghat%2C_Varanasi.jpg",
-          "license": "Check original Commons file metadata",
-          "verifiedSubject": false
+          "license": "CC BY-SA 4.0",
+          "verifiedSubject": true,
+          "reviewStatus": "source-page-verified"
         }
       ],
       "sequence": 2
@@ -55,11 +56,12 @@
       "photos": [
         {
           "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Tulsi_Ghat.jpg?width=1100",
-          "caption": "Tulsi Ghat — Wikimedia Commons file",
-          "credit": "Wikimedia Commons (see original file for author and licence)",
+          "caption": "Tulsi Ghat — original photograph by Nandanupadhyay",
+          "credit": "Nandanupadhyay",
           "source": "https://commons.wikimedia.org/wiki/File:Tulsi_Ghat.jpg",
-          "license": "Check original Commons file metadata",
-          "verifiedSubject": false
+          "license": "CC BY-SA 3.0",
+          "verifiedSubject": true,
+          "reviewStatus": "source-page-verified"
         }
       ],
       "sequence": 3
@@ -78,11 +80,12 @@
       "photos": [
         {
           "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Chet_Singh_Ghat_in_Varanasi.jpg?width=1100",
-          "caption": "Chet Singh Ghat — Wikimedia Commons file",
-          "credit": "Wikimedia Commons (see original file for author and licence)",
+          "caption": "Chet Singh Ghat — original photograph by Patrick Barry",
+          "credit": "Patrick Barry",
           "source": "https://commons.wikimedia.org/wiki/File:Chet_Singh_Ghat_in_Varanasi.jpg",
-          "license": "Check original Commons file metadata",
-          "verifiedSubject": false
+          "license": "CC BY-SA 2.0",
+          "verifiedSubject": true,
+          "reviewStatus": "source-page-verified"
         }
       ],
       "sequence": 4
@@ -101,11 +104,12 @@
       "photos": [
         {
           "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Harishchandra_Ghat%2C_Varanasi.JPG?width=1100",
-          "caption": "Harishchandra Ghat — Wikimedia Commons file",
-          "credit": "Wikimedia Commons (see original file for author and licence)",
+          "caption": "Harishchandra Ghat — original photograph by Vrinda",
+          "credit": "Vrinda",
           "source": "https://commons.wikimedia.org/wiki/File:Harishchandra_Ghat%2C_Varanasi.JPG",
-          "license": "Check original Commons file metadata",
-          "verifiedSubject": false
+          "license": "CC BY-SA 3.0",
+          "verifiedSubject": true,
+          "reviewStatus": "source-page-verified"
         }
       ],
       "sequence": 5
@@ -124,11 +128,12 @@
       "photos": [
         {
           "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Kedar_Ghat_in_Varanasi.jpg?width=1100",
-          "caption": "Kedar Ghat — Wikimedia Commons file",
-          "credit": "Wikimedia Commons (see original file for author and licence)",
+          "caption": "Kedar Ghat — original photograph by Patrick Barry",
+          "credit": "Patrick Barry",
           "source": "https://commons.wikimedia.org/wiki/File:Kedar_Ghat_in_Varanasi.jpg",
-          "license": "Check original Commons file metadata",
-          "verifiedSubject": false
+          "license": "CC BY-SA 2.0",
+          "verifiedSubject": true,
+          "reviewStatus": "source-page-verified"
         }
       ],
       "sequence": 6
@@ -147,11 +152,12 @@
       "photos": [
         {
           "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Darbhanga_ghat_Varanasi.JPG?width=1100",
-          "caption": "Darbhanga Ghat — Wikimedia Commons file",
-          "credit": "Wikimedia Commons (see original file for author and licence)",
+          "caption": "Darbhanga Ghat — original photograph by Ilya Mauter",
+          "credit": "Ilya Mauter",
           "source": "https://commons.wikimedia.org/wiki/File:Darbhanga_ghat_Varanasi.JPG",
-          "license": "Check original Commons file metadata",
-          "verifiedSubject": false
+          "license": "CC BY 3.0",
+          "verifiedSubject": true,
+          "reviewStatus": "source-page-verified"
         }
       ],
       "sequence": 7
@@ -170,11 +176,12 @@
       "photos": [
         {
           "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Dashashwamedh_Ghat_Varanasi.jpg?width=1100",
-          "caption": "Dashashwamedh Ghat — Wikimedia Commons file",
-          "credit": "Wikimedia Commons (see original file for author and licence)",
+          "caption": "Dashashwamedh Ghat — original photograph by Kasyap",
+          "credit": "Kasyap",
           "source": "https://commons.wikimedia.org/wiki/File:Dashashwamedh_Ghat_Varanasi.jpg",
-          "license": "Check original Commons file metadata",
-          "verifiedSubject": false
+          "license": "CC BY-SA 4.0",
+          "verifiedSubject": true,
+          "reviewStatus": "source-page-verified"
         }
       ],
       "sequence": 8
@@ -193,11 +200,12 @@
       "photos": [
         {
           "url": "https://commons.wikimedia.org/wiki/Special:FilePath/ManMandir_Ghat%2C_Varanasi.jpg?width=1100",
-          "caption": "Man Mandir Ghat — Wikimedia Commons file",
-          "credit": "Wikimedia Commons (see original file for author and licence)",
+          "caption": "Man Mandir Ghat — original photograph by Vrinda",
+          "credit": "Vrinda",
           "source": "https://commons.wikimedia.org/wiki/File:ManMandir_Ghat%2C_Varanasi.jpg",
-          "license": "Check original Commons file metadata",
-          "verifiedSubject": false
+          "license": "CC BY-SA 3.0",
+          "verifiedSubject": true,
+          "reviewStatus": "source-page-verified"
         }
       ],
       "sequence": 9
@@ -216,11 +224,12 @@
       "photos": [
         {
           "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Lalita_ghat_Varanasi.JPG?width=1100",
-          "caption": "Lalita Ghat — Wikimedia Commons file",
-          "credit": "Wikimedia Commons (see original file for author and licence)",
+          "caption": "Lalita Ghat — original photograph by Ilya Mauter",
+          "credit": "Ilya Mauter",
           "source": "https://commons.wikimedia.org/wiki/File:Lalita_ghat_Varanasi.JPG",
-          "license": "Check original Commons file metadata",
-          "verifiedSubject": false
+          "license": "CC BY 3.0",
+          "verifiedSubject": true,
+          "reviewStatus": "source-page-verified"
         }
       ],
       "sequence": 10
@@ -262,11 +271,12 @@
       "photos": [
         {
           "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Scindia_Ghat%2C_Varanasi%2C_Uttar_Pradesh%2C_India_(2011).jpg?width=1100",
-          "caption": "Scindia Ghat — Wikimedia Commons file",
-          "credit": "Wikimedia Commons (see original file for author and licence)",
+          "caption": "Scindia Ghat — original photograph by Aleksandr Zykov",
+          "credit": "Aleksandr Zykov",
           "source": "https://commons.wikimedia.org/wiki/File:Scindia_Ghat%2C_Varanasi%2C_Uttar_Pradesh%2C_India_(2011).jpg",
-          "license": "Check original Commons file metadata",
-          "verifiedSubject": false
+          "license": "CC BY-SA 2.0",
+          "verifiedSubject": true,
+          "reviewStatus": "source-page-verified"
         }
       ],
       "sequence": 12
@@ -285,11 +295,12 @@
       "photos": [
         {
           "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Varanasi_145_Panchaganga_ghat_and_Aurangzeb_mosque_(34524292510).jpg?width=1100",
-          "caption": "Panchganga Ghat — Wikimedia Commons file",
-          "credit": "Wikimedia Commons (see original file for author and licence)",
+          "caption": "Panchganga Ghat — original photograph by juggadery",
+          "credit": "juggadery",
           "source": "https://commons.wikimedia.org/wiki/File:Varanasi_145_Panchaganga_ghat_and_Aurangzeb_mosque_(34524292510).jpg",
-          "license": "Check original Commons file metadata",
-          "verifiedSubject": false
+          "license": "CC BY-SA 2.0",
+          "verifiedSubject": true,
+          "reviewStatus": "source-page-verified"
         }
       ],
       "sequence": 13
@@ -308,11 +319,12 @@
       "photos": [
         {
           "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Rajghat_Varanasi_4.jpg?width=1100",
-          "caption": "Raj Ghat — Wikimedia Commons file",
-          "credit": "Wikimedia Commons (see original file for author and licence)",
+          "caption": "Raj Ghat — original photograph by Rangan Datta Wiki",
+          "credit": "Rangan Datta Wiki",
           "source": "https://commons.wikimedia.org/wiki/File:Rajghat_Varanasi_4.jpg",
-          "license": "Check original Commons file metadata",
-          "verifiedSubject": false
+          "license": "CC BY-SA 4.0",
+          "verifiedSubject": true,
+          "reviewStatus": "source-page-verified"
         }
       ],
       "sequence": 14
@@ -972,5 +984,11 @@
       "source": "../../gallery/",
       "siteContext": true
     }
-  ]
+  ],
+  "photoAudit": {
+    "date": "2026-10-25",
+    "commonsSubjectReviewed": 12,
+    "localExisting": 1,
+    "notes": "Wikimedia filenames and author information checked against Commons file pages. Additional images returned from live search remain explicitly unreviewed. Local gallery ownership and permission need owner confirmation."
+  }
 }
