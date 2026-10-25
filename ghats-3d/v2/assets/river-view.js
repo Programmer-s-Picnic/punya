@@ -16,7 +16,8 @@ const GENERIC={
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 function create(places){
  const root=$('riverView'),water=$('riverWater'),imgs=[$('riverPhotoA'),$('riverPhotoB')];
- let active=false,slot=0,currentStop=-1,tick=0,elapsed=0,requestKey=0,photo=null,lastW=0,lastH=0;
+ let active=false,slot=0,currentStop=-1,elapsed=0,requestKey=0,photo=null,lastW=0,lastH=0;
+ let lookOffset=0,dragPointer=null,dragStart=0,dragBase=0;
  // Only photos with a reviewed ghat subject enter the location-specific layer.
  function sourceFor(i){
   const stop=places[clamp(i,0,places.length-1)];
@@ -73,6 +74,12 @@ function create(places){
     currentStop=ix;photo=p;next.onload=null;next.onerror=null;return;
   }
   next.src=p.url;
+  setTimeout(()=>{
+    if(nonce===requestKey&&active&&!next.complete){
+      $('riverPhotoUnavailable').hidden=false;
+      $('riverPhotoUnavailable').textContent='Photograph is slow to load. You can continue your journey or open the gallery.';
+    }
+  },9500);
   const anticipated=places[ix+1] && sourceFor(ix+1).url;
   if(anticipated&&anticipated!==p.url&&typeof Image!=='undefined'){
     // Decode ahead without retaining an oversized gallery cache.
@@ -122,7 +129,7 @@ function create(places){
  const api={
   get active(){return active},
   enter(){
-   active=true;root.hidden=false;root.classList.remove('wide');
+   active=true;root.hidden=false;root.classList.remove('wide');lookOffset=0;
    root.closest('.workspace')?.classList.add('river-mode');
    currentStop=-1;requestKey++;slot=0;
    imgs.forEach(img=>img.classList.remove('visible'));
@@ -141,8 +148,8 @@ function create(places){
    activatePhoto(stop);
    root.classList.toggle('wide',!follow);
    const drift=running?t:0;
-   const pan=Math.sin((leg+drift)*2.75)*1.9;
-   imgs.forEach(img=>{img.style.transform=follow?'scale(1.13) translate3d('+(-pan)+'%,0,0)':'scale(1.035) translate3d('+(-pan*.25)+'%,0,0)'});
+   const pan=Math.sin((leg+drift)*2.75)*1.9+lookOffset;
+   imgs.forEach(img=>{img.style.transform=follow?'scale(1.13) translate3d('+(-pan)+'%,0,0)':'scale(1.035) translate3d('+(-pan*.55)+'%,0,0)'});
    drawWater(typeof performance!=='undefined'?performance.now():Date.now(),running,speed);
   },
   frame(now,running,speed){
@@ -151,6 +158,18 @@ function create(places){
    drawWater(now,running,speed);
   }
  };
+ root.addEventListener('pointerdown',e=>{
+   if(e.target.closest('button,a'))return;
+   dragPointer=e.pointerId;dragStart=e.clientX;dragBase=lookOffset;
+   root.setPointerCapture?.(e.pointerId);
+ });
+ root.addEventListener('pointermove',e=>{
+   if(dragPointer!==e.pointerId)return;
+   const width=Math.max(1,root.getBoundingClientRect().width);
+   lookOffset=clamp(dragBase+(dragStart-e.clientX)*14/width,-8,8);
+ });
+ const release=e=>{if(e.pointerId===dragPointer)dragPointer=null};
+ root.addEventListener('pointerup',release);root.addEventListener('pointercancel',release);
  $('riverMapButton').addEventListener('click',()=>api.exitRequested?.());
  return api;
 }
