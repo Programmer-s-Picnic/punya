@@ -4,3 +4,21 @@ a{color:#f3cc9a}.screen{height:100dvh;min-height:530px;display:grid;grid-templat
 @media(max-width:820px){.screen{height:100dvh;min-height:0;grid-template-rows:auto minmax(0,1fr) auto}.header{padding:9px 11px}.brand strong{font-size:16px}.brand small{font-size:8px}.brand-mark{width:34px;height:34px;font-size:21px}.header-right .badge{display:none}.header-right .button{padding:7px 9px;font-size:11px}.workspace{grid-template-columns:1fr;grid-template-rows:minmax(240px,46%) minmax(0,1fr)}.info{border-left:0;border-top:1px solid var(--line)}.info-head{padding:10px 13px 8px}.info-head h2{font-size:22px;margin:4px 0}.info-head p{margin:5px 0;font-size:11px}.info-head .hindi{font-size:12px}.mini-stats{margin-top:7px}.mini-stats div{padding:6px}.info-scroll{padding:9px 12px 13px}.map-top{top:12px;left:12px;max-width:71%}.map-top h1{font-size:25px}.map-top p{display:none}.map-actions{left:10px;bottom:10px;gap:5px}.map-actions .button{font-size:11px;padding:8px}.source-chip{left:10px;bottom:54px;font-size:9px;max-width:95%;padding:5px 8px}.footer{padding:8px 10px;gap:8px}.footer .progress{width:25vw}.footer small{font-size:10px}.footer .buttons button{padding:7px 9px}.spacer{display:none}}
 @media(max-height:610px) and (max-width:820px){.workspace{grid-template-rows:minmax(150px,38%) minmax(0,1fr)}.map-top .eyebrow{display:none}.mini-stats{display:none}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
+
+
+/* Keep genuine map failures readable on small devices. Hide overlapping decorative map
+   headings and map controls ONLY while the map is unavailable. */
+.map-area.map-failed .map-top,
+.map-area.map-failed .map-actions,
+.map-area.map-failed .source-chip{display:none!important}
+.map-area.map-failed .map-fallback{z-index:9;overflow:auto;padding:clamp(10px,3vw,24px)}
+.map-area.map-failed .map-fallback>div{width:min(100%,420px);max-height:100%;overflow:auto}
+.map-fallback h2{font:600 clamp(21px,4.2vw,28px)/1.2 Georgia,serif;margin:0 0 10px}
+.map-fallback p{max-width:370px;margin:8px auto 14px;font-size:clamp(11px,2.5vw,13px);line-height:1.45;overflow-wrap:anywhere}
+.map-fallback .button{margin:0 auto;padding:9px 16px}
+.map-fallback .map-error-note{font-size:10px;color:#d0dbe4;margin-top:12px}
+@media(max-width:820px){
+ .map-area.map-failed .map-fallback{align-items:center;justify-content:center}
+ .map-top h1{overflow-wrap:normal;text-wrap:balance}
+ .source-chip{left:10px;right:10px;bottom:62px;max-width:none;overflow-wrap:anywhere}
+}
