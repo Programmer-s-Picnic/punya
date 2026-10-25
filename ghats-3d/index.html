@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#101b2d">
-<meta name="description" content="Walk through an immersive, interactive 3D artistic recreation of the Varanasi ghats. Explore the riverfront steps, temples and Ganga on mobile or desktop.">
+<meta name="description" content="Walk the virtual Ganga riverfront from Shooltankeshwar Mahadev through 84 traditional Kashi ghats to the Ganga–Varuna Sangam on mobile or desktop.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Walk the Ghats in 3D | Punya Yatra">
-<meta property="og:description" content="Take a virtual walk along the ghats of Kashi, explore heritage landmarks and cruise the Ganga in 3D.">
+<meta property="og:description" content="Explore Shooltankeshwar Mahadev, the 84 historic ghats and the Ganga–Varuna Sangam in a walkable 3D pilgrimage.">
 <meta property="og:image" content="https://punyayatra.in/assets/images/photos/river-temple.jpeg">
 <meta property="og:url" content="https://punyayatra.in/ghats-3d/">
 <link rel="canonical" href="https://punyayatra.in/ghats-3d/">
@@ -48,7 +48,7 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Walk the Ghats in 3D","url":"https://punyayatra.in/ghats-3d/","description":"An interactive artistic 3D interpretation of five Varanasi ghats, not a surveyed geographic reconstruction.","isPartOf":{"@type":"WebSite","name":"Punya Yatra","url":"https://punyayatra.in/"}}</script>
 </head>
 <body>
-<div id="scene" aria-label="Interactive 3D scene of the Varanasi riverfront"></div><div class="vignette"></div>
+<div id="scene" aria-label="Interactive 3D scene spanning Shooltankeshwar Mahadev to the Ganga Varuna Sangam"></div><div class="vignette"></div>
 <header class="top"><a href="../" class="brand" aria-label="Return to Punya Yatra home"><span class="brand-mark" aria-hidden="true">ॐ</span><span><strong>Punya Yatra</strong><small>Immersive Kashi</small></span></a><div class="top-actions"><button id="reset" class="chip" title="Return to starting view">↺ Reset view</button><button id="showAllGhats" class="chip" aria-controls="routePanel" aria-expanded="false">84 Ghats</button><button id="time" class="chip" aria-pressed="false" title="Switch between sunrise and evening">☀ Sunrise</button><button id="helpBtn" class="chip iconbtn" title="Help" aria-label="How to explore">?</button></div></header>
 <div class="banner" id="banner"><div class="eyebrow">The sacred river journey · Varanasi</div><h1>Walk beside<br><em>the Ganga.</em></h1><p>Journey from Shooltankeshwar Mahadev past the 84 historic ghats to the sacred Ganga–Varuna Sangam.</p><button id="start" class="cta">Begin the journey <span aria-hidden="true">→</span></button></div>
 <div id="markers" aria-label="Explore landmarks"></div><aside id="routePanel" aria-label="Directory of 84 Varanasi ghats" aria-hidden="true"><div class="route-head"><div><small>THE GHATS IN SEQUENCE</small><h2>All 84 Ghats</h2></div><button id="closeGhats" aria-label="Close ghats directory">✕</button></div><p>South to north, Assi to Adi Keshav. Shooltankeshwar lies farther south; the confluence is the northern endpoint.</p><input id="ghatSearch" type="search" placeholder="Search a ghat (e.g. Kedar)" aria-label="Search all ghats"><div id="allGhats"></div><small>The 3D model is an artistic reconstruction; names and counts vary by source.</small></aside>
@@ -347,7 +347,7 @@ function setMode(next){
  showIntro(false);
 }
 function visit(i){select(i);if(mode==='overview')setMode('walk');else if(mode==='walk'){player.x=zones[i].x;player.z=i===0||i===zones.length-1?0:-10;player.y=getGround(player.z)+1.7;player.yaw=Math.PI;player.pitch=-.1}else cruise=i/5}
-function reset(){select(2);mode='overview';document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));$('#joystick').style.display='none';cruise=0;showIntro(true)}
+function reset(){select(0);mode='overview';document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));$('#joystick').style.display='none';cruise=0;showIntro(true)}
 $('#start').addEventListener('click',()=>setMode('walk'));$('#reset').addEventListener('click',reset);document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.mode)));
 $('#time').addEventListener('click',()=>{dusk=!dusk;$('#time').textContent=dusk?'☾ Evening':'☀ Sunrise';$('#time').setAttribute('aria-pressed',String(dusk));scene.background.setHex(dusk?0x34405c:0x9fc4da);scene.fog.color.setHex(dusk?0x3e465f:0xacc9db);ambient.intensity=dusk?1.08:2.1;sun.intensity=dusk?1.1:2.55;sun.color.setHex(dusk?0xff916a:0xffdfaa);waterMaterial.color.setHex(dusk?0x325a7a:0x4b94a4);riverLamps.forEach(l=>l.visible=dusk)});
 $('#helpBtn').addEventListener('click',()=>$('#help').classList.add('open'));$('#closeHelp').addEventListener('click',()=>$('#help').classList.remove('open'));$('#help').addEventListener('click',e=>{if(e.target.id==='help')$('#help').classList.remove('open')});
@@ -392,7 +392,7 @@ function animate(){
  renderer.render(scene,camera);requestAnimationFrame(animate);
 }
 window.addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,innerWidth<780?1.35:1.8))});
-select(2);const load=$('#loader');load.style.display='none';animate();
+select(0);const load=$('#loader');load.style.display='none';animate();
 </script>
 <script>setTimeout(()=>{const el=document.getElementById('loader');if(el&&getComputedStyle(el).display!=='none'){el.querySelector('p').textContent='The 3D engine could not load. Check that WebGL is enabled and that the device has an internet connection.';el.querySelector('.spinner').style.display='none';el.querySelector('button').style.display='block';}},12000);</script>
 </body>
