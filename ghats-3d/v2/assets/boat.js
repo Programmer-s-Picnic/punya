@@ -90,6 +90,7 @@ function create({places,onStop,status,stopOtherTour,openGallery}){
   toggle(){
    if(!this.active){this.start();return}
    if(this.ended){this.exit();this.start();return}
+   if(this.leg>=segments.length){this.finish();return}
    this.running=!this.running;
    this.pausedAtStop=false;
    this.last=0;
@@ -107,7 +108,7 @@ function create({places,onStop,status,stopOtherTour,openGallery}){
    onStop(this.selected);
    this.refreshButtons();this.repaint(true);
    status('Arrived at '+places[this.selected].name+' · view gallery or continue');
-   if(this.selected===sourceStops[sourceStops.length-1])this.finish();
+   // Keep the Adi Keshav gallery available before the unsurveyed Sangam finish.
   },
   finish(){
    this.running=false;this.ended=true;this.pausedAtStop=true;this.leg=segments.length;this.t=0;
@@ -128,9 +129,10 @@ function create({places,onStop,status,stopOtherTour,openGallery}){
   },
   step(delta){
    if(!this.active)this.start();
+   if(this.ended&&delta<0){this.ended=false;this.leg=segments.length;this.t=0;this.atStop();return}
    const current=this.leg;
    const next=clamp(current+delta,0,segments.length);
-   if(next===segments.length){this.finish();return}
+   if(next===segments.length){this.leg=segments.length;this.t=0;this.atStop();return}
    this.leg=next;this.t=0;this.running=false;this.pausedAtStop=true;this.ended=false;
    onStop(sourceStops[next]);this.refreshButtons();this.repaint(true);
    status('Boat stop · '+places[sourceStops[next]].name);
