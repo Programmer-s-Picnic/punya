@@ -30,6 +30,7 @@ function svgBoat(){
  return div;
 }
 function create({places,onStop,status,stopOtherTour,openGallery}){
+ const riverView=window.PunyaRiverView?.create(places);
  const tracked=places.map((p,index)=>({index,pos:point(p)})).filter(p=>p.pos);
  const sourceStops=tracked.map(p=>p.index);
  const offshore=tracked.map(p=>scenicAt(places[p.index]));
@@ -70,7 +71,7 @@ function create({places,onStop,status,stopOtherTour,openGallery}){
    $('boatStage').textContent=this.ended?'Arrived at Ganga–Varuna Sangam':this.running?'Sailing toward '+next:'Stopped at '+from;
    $('boatPosition').textContent=this.ended?'End of virtual journey — confluence near Adi Keshav':this.running?'Approaching '+next+' · virtual playback '+this.speed+'×':'Gallery stop · '+from+' · tap Continue voyage when ready';
    $('boatProgressFill').style.width=(this.ended?100:(this.progress/segments.length*100)).toFixed(1)+'%';
-   $('boatCamera').textContent=this.follow?'◉ Follow boat':'◉ Wide view';
+   $('boatCamera').textContent=this.follow?'◉ River camera':'◉ Wide river view';
    $('boatCamera').setAttribute('aria-pressed',String(this.follow));
    $('boatGallery').disabled=false;
   },
@@ -81,7 +82,8 @@ function create({places,onStop,status,stopOtherTour,openGallery}){
    const area=$('map').closest('.map-area');area?.classList.add('boat-active');
    $('boatHud').hidden=false;
    $('footerBoat').textContent='❚❚ Pause boat';
-   $('boatCanvas').hidden=!!this.mapReady;
+   $('boatCanvas').hidden=true;
+   riverView?.enter();
    onStop(0);this.showLayers();
    this.refreshButtons();this.repaint(true);
    status('Virtual boat journey started · pauses at each landmark');
@@ -142,6 +144,7 @@ function create({places,onStop,status,stopOtherTour,openGallery}){
    this.active=false;this.running=false;this.ended=false;
    if(this.request)window.cancelAnimationFrame(this.request);
    this.request=0;this.last=0;
+   riverView?.exit();
    $('boatHud').hidden=true;$('boatCanvas').hidden=true;$('footerBoat').textContent='⛵ Boat journey';
    $('footerBoat').setAttribute('aria-pressed','false');
    $('map').closest('.map-area')?.classList.remove('boat-active');
@@ -168,25 +171,18 @@ function create({places,onStop,status,stopOtherTour,openGallery}){
   repaint(force=false){
    if(!this.active)return;
    const pos=this.currentPos();
+   riverView?.update(this.leg,this.t,this.running,this.follow,this.ended,this.speed);
    if(this.mapReady&&this.map){
     if(this.marker){this.marker.setLngLat(pos);if(typeof this.marker.setRotation==='function')this.marker.setRotation(this.heading())}
-    if(this.follow&&(force||this.running)){
-      const now=Date.now();
-      if(force||!this._lastCamera||now-this._lastCamera>130){
-       this._lastCamera=now;
-       // Ship viewing angle is cinematic and does not imply a navigational heading.
-       this.map.jumpTo({center:pos,zoom:15.45,pitch:55,bearing:this.heading()});
-      }
-    }
+    // The river-facing photo camera is now independent of the hidden overhead map.
     if(this.map.getSource?.('boat-wake')){
       const traveled=this.leg>=segments.length?
        segments.flatMap((seg,i)=>i===0?seg.points:seg.points.slice(1)):
        segments.slice(0,this.leg).flatMap((seg,i)=>i===0?seg.points:seg.points.slice(1)).concat(segments[this.leg].points.slice(0,Math.floor(this.t*30)+1),[pos]);
       this.map.getSource('boat-wake').setData({type:'Feature',geometry:{type:'LineString',coordinates:traveled.length>1?traveled:[pos,pos]},properties:{}});
     }
-   }else{
-    this.drawFallback(pos);
    }
+   // If all photos fail, the dedicated river-view still renders water and a boat bow.
    this.refreshButtons();
   },
   showLayers(){
@@ -219,12 +215,12 @@ function create({places,onStop,status,stopOtherTour,openGallery}){
    }catch(err){
     console.warn('Map boat overlay failed, switching to river canvas',err);
     this.mapReady=false;this.fallback=true;
-    if(this.active)$('boatCanvas').hidden=false;
+    if(this.active)$('boatCanvas').hidden=true;
    }
   },
   unavailable(){
    this.mapReady=false;this.map=null;this.marker=null;this.boatIcon=null;
-   if(this.active){$('boatCanvas').hidden=false;this.repaint(true)}
+   if(this.active){$('boatCanvas').hidden=true;this.repaint(true)}
   },
   drawFallback(pos){
    const canvas=$('boatCanvas');if(canvas.hidden)canvas.hidden=false;
@@ -263,6 +259,7 @@ function create({places,onStop,status,stopOtherTour,openGallery}){
   }
  };
  // Map failure should never prevent the simulated river journey from animating.
+ if(riverView)riverView.exitRequested=()=>ctrl.exit();
  $('boatLaunch').addEventListener('click',()=>ctrl.start());
  $('footerBoat').addEventListener('click',()=>ctrl.start());
  $('boatPlay').addEventListener('click',()=>ctrl.toggle());
