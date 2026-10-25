@@ -22,3 +22,45 @@ a{color:#f3cc9a}.screen{height:100dvh;min-height:530px;display:grid;grid-templat
  .map-top h1{overflow-wrap:normal;text-wrap:balance}
  .source-chip{left:10px;right:10px;bottom:62px;max-width:none;overflow-wrap:anywhere}
 }
+
+
+/* Virtual boat mode: independent scenic fallback, never a navigational chart */
+.boat-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:5;pointer-events:none;background:#173e58}
+.boat-hud{position:absolute;left:12px;right:12px;bottom:12px;z-index:11;background:rgba(8,27,44,.94);border:1px solid rgba(249,215,165,.49);border-radius:16px;padding:12px 14px;box-shadow:0 10px 35px #0018;backdrop-filter:blur(16px);max-width:650px;margin:0 auto;color:#fff}
+.boat-hud[hidden],.boat-canvas[hidden]{display:none!important}
+.boat-hud-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:5px}
+.boat-kicker{font-size:10px;font-weight:800;color:#f0cb96;letter-spacing:.12em;text-transform:uppercase}
+.boat-hud strong{display:block;font:600 clamp(16px,2vw,21px)/1.2 Georgia,serif}
+.boat-sub{font-size:11px;line-height:1.45;color:#cadce8;margin:6px 0 10px}
+.boat-operations{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.boat-operations .button{font-size:11px;padding:8px 10px;white-space:nowrap;border-radius:8px}
+.boat-speed{display:flex;align-items:center;gap:5px;font-size:11px;color:#d5e3ec}
+.boat-speed select{background:#223e53;color:white;border:1px solid #ffffff52;border-radius:8px;padding:7px;font-size:11px}
+.boat-progress{height:5px;margin:10px 0 7px;border-radius:999px;background:#ffffff38;overflow:hidden}
+#boatProgressFill{width:0;height:100%;background:#edc17a;transition:width .15s linear}
+.boat-disclaimer{display:block;font-size:10px;line-height:1.35;color:#d0dae4}
+.boat-close{background:#193246;border-radius:50%;width:28px;height:28px;padding:0!important;flex:none}
+.map-area.boat-active .map-top,.map-area.boat-active .map-actions,.map-area.boat-active .source-chip{display:none!important}
+.map-area.boat-active .map-fallback{display:none!important}
+.map-area.boat-active .map-canvas{z-index:1}
+.boat-launch{border-color:#edc17a75!important}
+.footer .boat-launch{background:#eec486;color:#112c42;font-weight:700}
+.map-pin.active-marker{border-color:#fbd088!important;transform:scale(1.12)}
+@media(max-width:820px){
+ .boat-hud{left:7px;right:7px;bottom:7px;padding:8px 10px;border-radius:11px}
+ .boat-hud-heading{margin-bottom:2px}.boat-kicker{font-size:9px}
+ .boat-hud strong{font-size:14px}.boat-sub{font-size:10px;margin:4px 0 6px;max-height:32px;overflow:hidden}
+ .boat-operations{gap:4px}
+ .boat-operations .button{padding:6px 7px;font-size:10px}
+ .boat-operations #boatPrev,.boat-operations #boatNext{padding:6px}
+ .boat-speed{font-size:10px}
+ .boat-speed select{font-size:10px;padding:5px}
+ .boat-progress{margin:6px 0 5px}
+ .boat-disclaimer{font-size:9px}
+ .footer .boat-launch{padding:7px;font-size:11px}
+ .map-area.boat-active .maplibregl-ctrl-top-right{display:none}
+}
+@media(max-height:650px) and (max-width:820px){
+ .boat-hud{padding:6px}.boat-hud .boat-sub{display:none}.boat-disclaimer{display:none}
+ .boat-operations .button{font-size:9px;padding:5px}
+}
