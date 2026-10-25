@@ -394,6 +394,10 @@ async function init(){
   const ix=data.places.findIndex(p=>p.id===raw);
   choose(ix>=0?ix:0);
   state.booted=true;
+  if(new URLSearchParams(location.search).get('mode')==='boat'&&boatCtrl){
+    boatCtrl.start();
+    if(ix>0)boatCtrl.jumpTo(ix);
+  }
   void initMap();
  }catch(err){
   $('mapFallback').classList.add('show');
