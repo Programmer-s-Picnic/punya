@@ -5,6 +5,17 @@
 
 This preview does not replace the existing `ghats-3d/` application, booking page or home page. There is no preview link in the site's main navigation until approval.
 
+## River-facing Boat Journey (2026-10-25)
+
+**Default Boat Journey is now a river-facing photographic scene, not an overhead map.**
+
+- Boat-bow point-of-view with gently animated water, wake and a perspective-based image pan.
+- As the sightseeing animation approaches a major stop, it crossfades to that stop's verified subject photograph where available. The actual photograph's viewpoint is not guaranteed to be from the river; the UI explicitly states this.
+- Missing place-specific photography is replaced with a labelled **general Varanasi ghats photograph taken from a Ganga boat**, not an invented place-specific photo. Original source: Wikimedia Commons, *Varanasi ghats seen from a boat on the Ganges river in October 2014.jpg*, photographer Rickard Törnblad, CC BY-SA 4.0.
+- River-facing image area supports horizontal touch drag, river-level/wide image framing, cruise start/pause/resume, adjustable nonphysical sightseeing speed, and automatic pauses for each location's photo gallery.
+- "Open map" exits the first-person scene and returns to the map viewer. The photo-based scene can run even if the map engine is unavailable.
+- This is **not a continuous georeferenced video, 360° panorama for each stop, photorealistic 3D model, or navigable boat route**. Producing these requires appropriately licensed river-facing footage/panoramas or surveys for the entire route.
+
 ## Delivered
 
 - Source-linked WGS84 coordinates for **15 major geographic stops**, including Shooltankeshwar Mahadev (Madhopur, **not** the homonymous downtown shrine), 13 historic ghats and Adi Keshav Ghat. 
