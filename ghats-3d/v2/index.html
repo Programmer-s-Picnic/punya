@@ -9,7 +9,7 @@
 <meta property="og:url" content="https://punyayatra.in/ghats-3d/v2/"><meta property="og:image" content="https://punyayatra.in/assets/images/photos/ganga-ghat.jpeg">
 <link rel="canonical" href="https://punyayatra.in/ghats-3d/v2/">
 <link rel="icon" href="../../favicon.png"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link href="./assets/style.css?v=20261025-mapfix2" rel="stylesheet">
+<link href="./assets/style.css?v=20261025-boat-v1" rel="stylesheet">
 <title>Real Kashi River Journey | Punya Yatra</title>
 </head>
 <body>
@@ -21,6 +21,22 @@
 <main class="workspace">
  <section class="map-area" aria-label="Interactive map of the Varanasi riverfront">
   <div id="map" class="map-canvas" role="application" aria-label="Georeferenced landmark map"></div>
+  <canvas id="boatCanvas" class="boat-canvas" aria-label="Illustrative animated Ganga boat route, not a navigation chart" hidden></canvas>
+  <div id="boatHud" class="boat-hud" hidden aria-live="polite">
+   <div class="boat-hud-heading"><span class="boat-kicker">⛵ Virtual river cruise</span><button class="button boat-close" id="boatExit" aria-label="Leave boat journey">✕ Exit</button></div>
+   <strong id="boatStage">Ready to depart</strong>
+   <div class="boat-sub" id="boatPosition">Follow the Ganga from Shooltankeshwar toward the Varuna Sangam</div>
+   <div class="boat-operations">
+    <button class="button primary" id="boatPlay" aria-pressed="false">▶ Start voyage</button>
+    <button class="button" id="boatPrev" aria-label="Previous boat stop">‹ Stop</button>
+    <button class="button" id="boatNext" aria-label="Next boat stop">Stop ›</button>
+    <label class="boat-speed">Speed <select id="boatSpeed" aria-label="Sightseeing playback speed"><option value="1">1×</option><option value="2">2×</option><option value="4">4×</option></select></label>
+    <button class="button" id="boatCamera" aria-pressed="true">◉ Follow boat</button>
+    <button class="button" id="boatGallery">▧ Gallery</button>
+   </div>
+   <div class="boat-progress" aria-hidden="true"><div id="boatProgressFill"></div></div>
+   <small class="boat-disclaimer">Illustrative river-side animation, not surveyed channel navigation. Gallery stops pause automatically.</small>
+  </div>
   <div id="mapFallback" class="map-fallback"><div><h2>Map unavailable</h2><p id="mapFailureText">You can still navigate real landmark records and browse their galleries below.</p><button class="button" id="retryMap">Retry map</button><p class="map-error-note">Map data © OpenStreetMap contributors. Photos remain available independently.</p></div></div>
   <div class="map-top"><div class="eyebrow">From southern Kashi to the Varuna confluence</div><h1>Explore the real<br>riverfront of Kashi.</h1><p>Geographic landmarks, verifiable sources, heritage context and photo galleries.</p></div>
   <div class="source-chip" id="routeQuality">Map points are based on sourced coordinates. The connecting line shows straight-line reference segments, not an approved boat or walking route.</div>
@@ -28,7 +44,7 @@
    <button class="button selected" id="street" aria-pressed="true">Map</button>
    <button class="button" id="satellite" aria-pressed="false">Satellite</button>
    <button class="button" id="tilt" aria-pressed="false">3D mapped buildings</button>
-   <button class="button" id="fit">See whole route</button>
+   <button class="button" id="fit">See whole route</button><button class="button boat-launch" id="boatLaunch">⛵ Boat journey</button>
   </div>
  </section>
  <aside class="info" aria-label="Location information and image gallery">
@@ -54,13 +70,13 @@
  </aside>
 </main>
 <footer class="footer">
- <div class="buttons"><button id="prev" class="button" aria-label="Previous stop">‹</button><button id="play" class="button primary" aria-pressed="false">▶ Guided journey</button><button id="next" class="button" aria-label="Next stop">›</button></div>
+ <div class="buttons"><button id="footerBoat" class="button boat-launch" aria-pressed="false">⛵ Boat journey</button><button id="prev" class="button" aria-label="Previous stop">‹</button><button id="play" class="button primary" aria-pressed="false">▶ Guided journey</button><button id="next" class="button" aria-label="Next stop">›</button></div>
  <input class="progress" type="range" id="progress" min="0" max="15" value="0" aria-label="Go to major stop">
  <small id="routePosition">Stop 1 of 16</small><span class="spacer"></span><small id="journeyStatus">Ready · Galleries start manually</small>
 </footer>
 </div>
 <div class="modal" id="photoModal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Fullscreen heritage photograph"><div class="modal-card"><div class="modal-top"><strong id="modalHeading">Photo gallery</strong><button class="button" id="closeModal" aria-label="Close fullscreen photograph">✕ Close</button></div><img id="modalImage" alt=""><p id="modalCaption"></p><div class="more-links"><a id="modalSource" target="_blank" rel="noopener noreferrer">Image source and licence</a></div></div></div>
-<div class="modal" id="helpModal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="How to use the real Kashi tour"><div class="modal-card"><div class="modal-top"><strong>How to use the Kashi journey</strong><button class="button" id="closeHelp">✕ Close</button></div><p>Select any major stop to fly to its mapped location. Use Guided journey for a user-controlled sequence between stops. Open each gallery and press Play if you want an automatic photo slideshow. The tour automatically pauses when you explore a gallery or manually choose a stop.</p><p><strong>Map</strong> and <strong>Satellite</strong> show the real geographic context. <strong>3D mapped buildings</strong> tilts the map and extrudes only footprints with mapped building-height data. This is not a surveyed architectural 3D scan. Dots mark only sourced positions. Straight connector lines and distance figures are lower-bound geographic references, NOT navigable river or walking routes. Unsurveyed traditional ghats remain searchable but are not given fabricated pins or distances.</p><p>For live boat/walking directions, seasonal accessibility or ritual access, consult local authorities and guides. Respect privacy and avoid photography of cremation ceremonies.</p></div></div>
-<script src="./assets/app.js?v=20261025-mapfix2" defer></script>
+<div class="modal" id="helpModal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="How to use the real Kashi tour"><div class="modal-card"><div class="modal-top"><strong>How to use the Kashi journey</strong><button class="button" id="closeHelp">✕ Close</button></div><p><strong>Boat journey:</strong> Select “Boat journey” to see a moving boat along an illustrative river-side curve between mapped landmarks. The boat pauses automatically at each location; select “Continue voyage” to proceed. Speed controls accelerate the sightseeing playback, not actual boating speed. Follow boat or choose wide camera. The photographic gallery can be opened at every stop, and the tour continues even if the map fails. The river path is scenic, NOT a surveyed channel, charter quote, distance measurement or safety guidance.</p><p>Select any major stop to fly to its mapped location. Use Guided journey for a user-controlled sequence between stops. Open each gallery and press Play if you want an automatic photo slideshow. The tour automatically pauses when you explore a gallery or manually choose a stop.</p><p><strong>Map</strong> and <strong>Satellite</strong> show the real geographic context. <strong>3D mapped buildings</strong> tilts the map and extrudes only footprints with mapped building-height data. This is not a surveyed architectural 3D scan. Dots mark only sourced positions. Straight connector lines and distance figures are lower-bound geographic references, NOT navigable river or walking routes. Unsurveyed traditional ghats remain searchable but are not given fabricated pins or distances.</p><p>For live boat/walking directions, seasonal accessibility or ritual access, consult local authorities and guides. Respect privacy and avoid photography of cremation ceremonies.</p></div></div>
+<script src="./assets/app.js?v=20261025-boat-v1" defer></script>
 </body>
 </html>
