@@ -264,6 +264,18 @@ async function initMap(){
   map.on('load',()=>{
     map.addSource('reference',{type:'geojson',data:{type:'Feature',properties:{},geometry:{type:'LineString',coordinates:chain}}});
     map.addLayer({id:'reference-line',type:'line',source:'reference',paint:{'line-color':'#eac484','line-width':3,'line-opacity':.8,'line-dasharray':[2,2]}});
+    // OpenFreeMap's vector data contains actual mapped building footprints.
+    // Extrude only buildings with documented render_height/height; do not manufacture heights for missing data.
+    try{
+      map.addSource('kashi-vector-buildings',{type:'vector',url:'https://tiles.openfreemap.org/planet',attribution:'© OpenMapTiles · © OpenStreetMap contributors'});
+      map.addLayer({id:'kashi-3d-buildings',type:'fill-extrusion',source:'kashi-vector-buildings','source-layer':'building',
+       minzoom:14,layout:{visibility:state.tilt?'visible':'none'},
+       filter:['any',['has','render_height'],['has','height']],
+       paint:{'fill-extrusion-color':'#cdb799','fill-extrusion-opacity':0.75,
+         'fill-extrusion-height':['coalesce',['to-number',['get','render_height']],['to-number',['get','height']],0],
+         'fill-extrusion-base':['coalesce',['to-number',['get','render_min_height']],['to-number',['get','min_height']],0]}});
+    }catch(e){console.warn('3D mapped building layer unavailable',e)}
+
     coords.forEach(p=>{
       const i=state.data.places.findIndex(x=>x.id===p.id);
       const el=document.createElement('button');
@@ -305,8 +317,8 @@ function toggleSatellite(on){
 function toggleTilt(){
  state.tilt=!state.tilt;
  $('tilt').classList.toggle('selected',state.tilt);$('tilt').setAttribute('aria-pressed',String(state.tilt));
- if(state.map)state.map.easeTo({pitch:state.tilt?58:0,bearing:state.tilt?18:0,duration:700});
- status(state.tilt?'3D perspective · tilted map, not surveyed 3D structures':'Map · overhead view');
+ if(state.map){state.map.easeTo({pitch:state.tilt?58:0,bearing:state.tilt?18:0,duration:700});if(state.map.getLayer('kashi-3d-buildings'))state.map.setLayoutProperty('kashi-3d-buildings','visibility',state.tilt?'visible':'none');}
+ status(state.tilt?'3D mapped buildings · only verified mapped heights; some areas remain flat':'Map · overhead view');
 }
 function wire(){
  $('prev').onclick=()=>choose(state.index-1);$('next').onclick=()=>choose(state.index+1);
