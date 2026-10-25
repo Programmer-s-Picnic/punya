@@ -99,7 +99,8 @@ const getGround=z=>clamp(1+Math.floor((z+19.36)/2.75)*.92,1,11.12);
 const groundAt=(x,z)=>(x<-294||x>294)?2.35:getGround(z);
 zones.forEach((g,k)=>{
  const color=mats[(k+1)%mats.length];
- if(k===0||k===zones.length-1){box(scene,43,2.3,65,g.x,1.15,20,new THREE.MeshStandardMaterial({color:0x82976e,roughness:1}));return;}
+ if(k===0){box(scene,43,2.3,65,g.x,1.15,20,new THREE.MeshStandardMaterial({color:0x82976e,roughness:1}));return;}
+ if(k===zones.length-1){const green=new THREE.MeshStandardMaterial({color:0x82976e,roughness:1});box(scene,11,2.3,65,g.x-16,1.15,20,green);box(scene,11,2.3,65,g.x+16,1.15,20,green);return;}
  for(let s=0;s<12;s++){
   const z=-18+s*2.75,h=1+s*.92;
   box(scene,41.82,h,2.72,g.x,h/2,z,(s%4===0)?stone:color);
@@ -135,6 +136,7 @@ function building(x,z,w,d,h,idx,base=11.84){
  facades.push(gr);return gr;
 }
 zones.forEach((g,k)=>{
+ if(k===0||k===zones.length-1)return;
  const widths=[12,13,10,12,11],center=g.x;
  const architecture=[
   {x:center-13,w:11,h:16+rnd(0,8),mat:k+1},
@@ -177,7 +179,7 @@ const leaning=new THREE.Group();leaning.position.set(147,.5,-19);leaning.rotatio
 box(leaning,6,5,6,0,2.4,0,mats[4]);cyl(leaning,3.3,3.6,1,0,5.6,0,gold);cone(leaning,3.1,7,0,9.4,0,mats[6]);
 // Stepside arches and parasols.
 const umbrellaMats=[0xeb9b58,0xf1d2a0,0xb94437,0xc6a7c0].map(c=>new THREE.MeshStandardMaterial({color:c,side:THREE.DoubleSide}));
-for(let i=0;i<34;i++){
+for(let i=0;i<(compact?55:95);i++){
  const x=rnd(-277,278),z=rnd(-14,9),y=getGround(z);
  if(i%2===0){cyl(scene,.07,.07,3.4,x,y+1.7,z,dark);cone(scene,1.85,.9,x,y+3.5,z,umbrellaMats[i%4],9)}
  else {box(scene,1.2,.65,.6,x,y+.3,z,mats[i%7])}
@@ -185,7 +187,7 @@ for(let i=0;i<34;i++){
 const people=[];
 const skin=[0xae7051,0x9b6143,0xd6a27c,0x85583c].map(c=>new THREE.MeshStandardMaterial({color:c}));
 const cloth=[0xe6a54a,0xb94748,0x506a96,0xf0d19b,0xf2c1aa,0x6eaf91,0xdcd6cb].map(c=>new THREE.MeshStandardMaterial({color:c}));
-for(let i=0;i<(compact?42:88);i++){
+for(let i=0;i<(compact?75:135);i++){
  const x=rnd(-275,275),z=rnd(-15,13),g=new THREE.Group(),y=getGround(z);
  g.position.set(x,y,z);
  cyl(g,.31,.39,1.32,0,.85,0,cloth[i%cloth.length],8);
@@ -211,6 +213,79 @@ for(let i=0;i<14;i++){
  for(const dx of [-.65,.65]){const wing=new THREE.Mesh(new THREE.PlaneGeometry(1.3,.2),white);wing.rotation.z=dx>0?.25:-.25;wing.position.x=dx;gr.add(wing)}
  gr.userData.phase=rnd(0,6.28);scene.add(gr);facades.push(gr);
 }
+
+// Heritage features, sculpted landscape, and confluence added to the original 3D walk.
+const clay=new THREE.MeshStandardMaterial({color:0xb87659,roughness:.93});
+const lawn=new THREE.MeshStandardMaterial({color:0x7a9067,roughness:1});
+const leaves=[0x4d7848,0x719054,0x668348].map(color=>new THREE.MeshStandardMaterial({color,roughness:1}));
+function treeAt(x,z,scale=1){
+ const g=new THREE.Group();g.position.set(x,2.3,z);g.scale.setScalar(scale);scene.add(g);
+ cyl(g,.16,.24,3.6,0,1.8,0,dark,6);
+ for(let i=0;i<3;i++){const o=new THREE.Mesh(new THREE.IcosahedronGeometry(1,0),leaves[i]);o.scale.set(1.8,1.6,1.5);o.position.set(Math.sin(i*2.3)*.7,3.7+i*.3,Math.cos(i*2.3)*.6);g.add(o)}
+}
+for(let j=0;j<(compact?40:80);j++)treeAt(j%2?-335+rnd(0,40):298+rnd(0,37),rnd(29,49),rnd(.6,1.35));
+// Shooltankeshwar Mahadev: stylised village shrine, entrance, courtyard and trident.
+{
+ const x=-315,z=27;
+ box(scene,26,1.2,27,x,3,z,stone);
+ box(scene,7,7,8,x,7.1,z+6,clay);
+ for(let i=0;i<6;i++){const r=3.3-i*.39;cyl(scene,r,r+.18,1.35,x,11.4+i*1.35,z+6,i%2?clay:gold)}
+ cone(scene,.9,3,x,20.8,z+6,clay);
+ for(const dx of [-11,11])box(scene,1.3,9,1.3,x+dx,7.6,z-11,clay);
+ box(scene,23,1.6,1.7,x,12.4,z-11,clay);
+ box(scene,24,.35,1.7,x,13.3,z-11,gold);
+ cyl(scene,.12,.13,7.5,x+13,7.0,z+7,gold);
+ for(const dx of [-1,0,1]){cyl(scene,.09,.1,1.5,x+13+dx,11.0,z+7,gold);cone(scene,.22,.8,x+13+dx,12,z+7,gold)}
+ box(scene,2,.16,.2,x+13,10.6,z+7,gold);
+}
+// Additional sacred spires and richly varied ceremonial buildings.
+for(let k of [1,2,3,6,7,9,10,12,13])temple(zones[k].x+9,47,19+(k%4)*3,0xd5ad91,0xb07751);
+for(let j=-8;j<=8;j++)box(scene,1.1,10,.32,zones[5].x+j*2.3,16.8,30,j%2?rust:cream);
+// Fortified Chet Singh courtyard and palace-like Darbhanga colonnade.
+{
+ const x=zones[3].x;box(scene,30,21,14,x,23,43,clay);
+ for(const dx of [-13,13]){cyl(scene,3.3,4,21,x+dx,23,38,clay,9);cone(scene,4,3,x+dx,35,38,dark)}
+ box(scene,5,8,.25,x,18,35.8,dark);
+}
+{
+ const x=zones[6].x;box(scene,28,22,14,x,23,44,stone);
+ for(let j=-4;j<=4;j++)cyl(scene,.33,.42,9.5,x+j*3.0,20,37,gold,8);
+ box(scene,29,.8,3,x,25.4,37,gold);
+}
+// Ceremonial parasols and lamps at Dashashwamedh Ghat.
+for(let i=-5;i<=5;i++){
+ const x=zones[7].x+i*3.4;
+ box(scene,2.5,.45,2.0,x,9.1,2.5,stone);
+ cyl(scene,.07,.08,4.8,x,11.9,3,dark,8);
+ cone(scene,1.65,1.1,x,14.65,3,i%2?rust:gold,9);
+}
+// The opposite-bank Ramnagar Fort is a simplified distant landmark.
+{
+ const x=zones[2].x+3,z=-340;
+ box(scene,72,7,45,x,3,z,stone);
+ box(scene,46,20,17,x,15,z+8,clay);
+ for(const dx of [-24,24]){cyl(scene,4.5,5,23,x+dx,16,z-1,clay,10);cone(scene,5,4,x+dx,29.5,z-1,dark,10)}
+}
+// Stylised Malviya Bridge by Raj Ghat: river crossing with piers.
+{
+ const x=zones[13].x+16;
+ for(let i=0;i<12;i++)box(scene,2.7,16,3.3,x,8,-288+i*27,stone);
+ box(scene,9,2,322,x,17.7,-139,clay);
+ for(let i=0;i<25;i++){const z=-295+i*13;box(scene,.3,3,.45,x-3.5,20,z,gold);box(scene,.3,3,.45,x+3.5,20,z,gold)}
+}
+// Varuna tributary joins the main Ganga near the northern pilgrimage endpoint.
+{
+ const branch=new THREE.Mesh(new THREE.PlaneGeometry(24,210,3,20),new THREE.MeshStandardMaterial({color:0x477f8e,roughness:.37,metalness:.25,side:THREE.DoubleSide}));
+ branch.rotation.x=-Math.PI/2;branch.position.set(315,.28,75);scene.add(branch);
+ for(let i=0;i<12;i++){const z=15+i*13;box(scene,2.5,1.7,12,301,1.2,z,stone);box(scene,2.5,1.7,12,329,1.2,z,stone)}
+ temple(292,44,28,0xe9dfcb,0xc78b66);
+}
+const riverLamps=[];
+for(let i=0;i<60;i++){
+ const lamp=new THREE.Mesh(new THREE.IcosahedronGeometry(.18,0),new THREE.MeshBasicMaterial({color:0xffcf77}));
+ lamp.position.set(rnd(-275,280),.12,rnd(-75,-25));lamp.visible=false;scene.add(lamp);riverLamps.push(lamp);
+}
+
 const landmarks=zones.map((g,i)=>{
  const node=document.createElement('button');node.className='marker';node.textContent=g.name;node.setAttribute('aria-label','Visit '+g.name);node.addEventListener('click',()=>visit(i));
  $('#markers').appendChild(node);return {node,point:new THREE.Vector3(g.x,25,27)};
@@ -234,7 +309,7 @@ function setMode(next){
 function visit(i){select(i);if(mode==='overview')setMode('walk');else if(mode==='walk'){player.x=zones[i].x;player.z=i===0||i===zones.length-1?0:-10;player.y=getGround(player.z)+1.7;player.yaw=Math.PI;player.pitch=-.1}else cruise=i/5}
 function reset(){select(2);mode='overview';document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));$('#joystick').style.display='none';cruise=0;showIntro(true)}
 $('#start').addEventListener('click',()=>setMode('walk'));$('#reset').addEventListener('click',reset);document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.mode)));
-$('#time').addEventListener('click',()=>{dusk=!dusk;$('#time').textContent=dusk?'☾ Evening':'☀ Sunrise';$('#time').setAttribute('aria-pressed',String(dusk));scene.background.setHex(dusk?0x34405c:0x9fc4da);scene.fog.color.setHex(dusk?0x3e465f:0xacc9db);ambient.intensity=dusk?1.08:2.1;sun.intensity=dusk?1.1:2.55;sun.color.setHex(dusk?0xff916a:0xffdfaa);waterMaterial.color.setHex(dusk?0x325a7a:0x4b94a4)});
+$('#time').addEventListener('click',()=>{dusk=!dusk;$('#time').textContent=dusk?'☾ Evening':'☀ Sunrise';$('#time').setAttribute('aria-pressed',String(dusk));scene.background.setHex(dusk?0x34405c:0x9fc4da);scene.fog.color.setHex(dusk?0x3e465f:0xacc9db);ambient.intensity=dusk?1.08:2.1;sun.intensity=dusk?1.1:2.55;sun.color.setHex(dusk?0xff916a:0xffdfaa);waterMaterial.color.setHex(dusk?0x325a7a:0x4b94a4);riverLamps.forEach(l=>l.visible=dusk)});
 $('#helpBtn').addEventListener('click',()=>$('#help').classList.add('open'));$('#closeHelp').addEventListener('click',()=>$('#help').classList.remove('open'));$('#help').addEventListener('click',e=>{if(e.target.id==='help')$('#help').classList.remove('open')});
 window.addEventListener('keydown',e=>{if(e.key==='Escape'){$('#help').classList.remove('open');dragging=false}if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key))e.preventDefault();key.add(e.key.toLowerCase())});
 window.addEventListener('keyup',e=>key.delete(e.key.toLowerCase()));window.addEventListener('blur',()=>key.clear());
