@@ -27,6 +27,7 @@
 .side{position:fixed;left:clamp(14px,3vw,42px);bottom:112px;z-index:5;max-width:340px;min-width:230px;border:1px solid var(--border);background:var(--glass);border-radius:19px;padding:18px;backdrop-filter:blur(20px);box-shadow:0 16px 35px #12223330}.side small{color:var(--gold);font-size:10px;letter-spacing:.2em;text-transform:uppercase}.side h2{font:500 24px/1.2 "Playfair Display",serif;margin:6px 0}.side p{font-size:12px;line-height:1.6;color:var(--muted);margin:0 0 12px}.side .tip{border-top:1px solid var(--border);padding-top:10px;font-size:11px;color:#d8dfe8}
 .modes{position:fixed;right:clamp(14px,3vw,42px);bottom:120px;z-index:5;display:flex;flex-direction:column;gap:9px}.mode{min-width:128px;text-align:left}.mode b{font-size:14px}.mode span{display:block;color:#c2cbd6;font-size:10px;margin-top:2px}.mode.active{background:#f4c47c;color:#222e3d;border-color:transparent}.mode.active span{color:#3b4a56}
 .gbar{position:fixed;bottom:0;left:0;right:0;z-index:6;padding:15px max(15px,calc((100vw - 1000px)/2)) max(19px,env(safe-area-inset-bottom));background:linear-gradient(180deg,transparent,rgba(9,19,33,.86) 45%);display:flex;align-items:center;gap:10px;overflow-x:auto;scrollbar-width:none}.gbar::-webkit-scrollbar{display:none}.gbar button{border:1px solid rgba(255,255,255,.22);background:rgba(13,29,48,.74);color:#f2eee9;border-radius:999px;padding:10px 15px;white-space:nowrap;font-size:12px;backdrop-filter:blur(16px)}.gbar button.active{background:#f4c47c;color:#1a2635;border-color:#f4c47c;font-weight:700}
+.marker.has-photo::after{content:'  ▧';color:#ffe1ab}
 .marker{position:absolute;z-index:3;transform:translate(-50%,-50%);padding:6px 11px;border-radius:999px;border:1px solid #fff9;background:rgba(16,30,44,.72);color:white;white-space:nowrap;font-size:11px;pointer-events:auto;text-shadow:0 1px 3px #14202e;backdrop-filter:blur(8px)}
 #loader{position:fixed;inset:0;z-index:12;background:linear-gradient(135deg,#101e32,#294662);display:grid;place-items:center;text-align:center;padding:24px}#loader h2{font:500 32px "Playfair Display",serif;margin:10px 0}.spinner{width:38px;height:38px;border:3px solid #fff4;border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;margin:auto}@keyframes spin{to{transform:rotate(360deg)}}#loader p{max-width:350px;line-height:1.6;color:#cbd7e6}#loader button{display:none;margin:12px auto}
 #help{position:fixed;inset:0;z-index:20;background:#020a14af;display:none;place-items:center;padding:20px}#help.open{display:grid}.help-card{width:min(100%,520px);background:#14243a;border:1px solid #fff3;border-radius:22px;padding:26px 30px;box-shadow:0 24px 80px #0007}.help-card h2{font:500 29px "Playfair Display",serif}.help-card p,.help-card li{font-size:14px;color:#d1d9e5;line-height:1.7}.help-card ul{padding-left:20px}.help-card button{margin-top:12px}
@@ -78,7 +79,7 @@
 }
 
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Walk the Ghats in 3D","url":"https://punyayatra.in/ghats-3d/","description":"An interactive artistic 3D interpretation of five Varanasi ghats, not a surveyed geographic reconstruction.","isPartOf":{"@type":"WebSite","name":"Punya Yatra","url":"https://punyayatra.in/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Walk the Ghats in 3D","url":"https://punyayatra.in/ghats-3d/","description":"An artistic 3D exploration from Shooltankeshwar Mahadev to the Ganga–Varuna Sangam with landmark photographs and an 84-ghat directory.","isPartOf":{"@type":"WebSite","name":"Punya Yatra","url":"https://punyayatra.in/"}}</script>
 </head>
 <body class="intro">
 <div id="scene" aria-label="Interactive 3D scene spanning Shooltankeshwar Mahadev to the Ganga Varuna Sangam"></div><div class="vignette"></div>
@@ -375,8 +376,10 @@ const stopPhotographs={
 };
 const photoAlternativeSources={
  'Shooltankeshwar Mahadev':{text:'View photographs of the temple',url:'https://hindi.ianslive.in/sawan-vishesh-kashi-ka-shooltankeshwar-mahadev-mandir-jahan-ganga-ke-veg-ko-baba-vishwanath-ne-trishul-se-roka-tha--20250711122217'},
- 'Adi Keshav Ghat':{text:'View a photograph of Adi Keshav Ghat',url:'https://www.tourmyindia.com/states/uttarpradesh/adi-keshava-ghat-varanasi.html'}
+ 'Adi Keshav Ghat':{text:'View a photograph of Adi Keshav Ghat',url:'https://www.tourmyindia.com/states/uttarpradesh/adi-keshava-ghat-varanasi.html'},
+ 'Ganga–Varuna Sangam':{text:'View visitor photographs of the confluence',url:'https://www.tripadvisor.in/Attraction_Review-g297685-d12853528-Reviews-Adi_Keshava_Ghat-Varanasi_Varanasi_District_Uttar_Pradesh.html'}
 };
+zones.forEach((z,i)=>{if(stopPhotographs[z.name])document.querySelectorAll('#markers .marker')[i]?.classList.add('has-photo');});
 let photoToken=0,currentPhoto=null;
 function renderStopPhoto(name){
   const photo=stopPhotographs[name],version=++photoToken;
