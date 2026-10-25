@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1d2e">
+<meta name="description" content="Explore a georeferenced virtual journey along the Ganga from Shooltankeshwar Mahadev through Kashi's historic ghats to the Varuna confluence, with real location galleries.">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Punya Yatra"><meta property="og:title" content="Real Kashi River Journey · Interactive Map & Galleries">
+<meta property="og:description" content="Explore verified ghats, real geographic coordinates and stop-and-watch photographic galleries.">
+<meta property="og:url" content="https://punyayatra.in/ghats-3d/v2/"><meta property="og:image" content="https://punyayatra.in/assets/images/photos/ganga-ghat.jpeg">
+<link rel="canonical" href="https://punyayatra.in/ghats-3d/v2/">
+<link rel="icon" href="../../favicon.png"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link href="./assets/style.css?v=20261025b" rel="stylesheet">
+<title>Real Kashi River Journey | Punya Yatra</title>
+</head>
+<body>
+<div class="screen">
+<header class="header">
+ <a class="brand" href="../../"><span class="brand-mark" aria-hidden="true">ॐ</span><span><strong>Punya Yatra</strong><small>Real Kashi Journey</small></span></a>
+ <div class="header-right"><span class="badge">Geographic preview · v2</span><button class="button" id="lang" aria-pressed="false">हिन्दी</button><button class="button" id="helpBtn" aria-label="How to use">?</button></div>
+</header>
+<main class="workspace">
+ <section class="map-area" aria-label="Interactive map of the Varanasi riverfront">
+  <div id="map" class="map-canvas" role="application" aria-label="Georeferenced landmark map"></div>
+  <div id="mapFallback" class="map-fallback"><div><h2>Map unavailable</h2><p id="mapFailureText">You can still navigate real landmark records and browse their galleries below.</p><button class="button" id="retryMap">Retry map</button><p class="map-error-note">Map data © OpenStreetMap contributors. Photos remain available independently.</p></div></div>
+  <div class="map-top"><div class="eyebrow">From southern Kashi to the Varuna confluence</div><h1>Explore the real<br>riverfront of Kashi.</h1><p>Geographic landmarks, verifiable sources, heritage context and photo galleries.</p></div>
+  <div class="source-chip" id="routeQuality">Map points are based on sourced coordinates. The connecting line shows straight-line reference segments, not an approved boat or walking route.</div>
+  <div class="map-actions">
+   <button class="button selected" id="street" aria-pressed="true">Map</button>
+   <button class="button" id="satellite" aria-pressed="false">Satellite</button>
+   <button class="button" id="tilt" aria-pressed="false">3D perspective</button>
+   <button class="button" id="fit">See whole route</button>
+  </div>
+ </section>
+ <aside class="info" aria-label="Location information and image gallery">
+  <div class="info-head"><div class="small-title" id="stopType">SACRED SOUTHERN ENTRY · STOP 1</div><h2 id="stopName">Shooltankeshwar Mahadev</h2><div id="stopHindi" class="hindi"></div><p id="stopDescription">Loading geographic references…</p>
+   <div class="mini-stats"><div><small>Reference chain from start</small><b id="distanceFrom">—</b></div><div><small>Next verified stop</small><b id="distanceNext">—</b></div></div>
+  </div>
+  <div class="info-scroll">
+   <div class="section-title">Location gallery <span id="galleryCount" class="badge">—</span></div>
+   <div class="gallery-stage">
+    <button type="button" class="main-photo" id="openPhoto" title="Expand this photograph"><img id="photo" alt="" hidden><span id="emptyPhoto" class="empty-photo">Loading gallery…</span></button>
+    <div class="photo-caption" id="photoCredit"></div>
+    <div class="thumbnail-bar" id="thumbs"></div>
+    <div class="photo-nav"><button class="button" id="prevPhoto" aria-label="Previous photograph">‹ Previous</button><span class="footnote" id="photoIndex">0 / 0</span><button class="button" id="slideshow" aria-pressed="false">▶ Play</button><button class="button" id="nextPhoto" aria-label="Next photograph">Next ›</button></div>
+   </div>
+   <p id="photoCaution" class="footnote"></p>
+   <div class="more-links"><a id="placeSource" target="_blank" rel="noopener noreferrer">Location reference</a><a id="openMaps" target="_blank" rel="noopener noreferrer">Open coordinates in OpenStreetMap</a><a id="commonsSearch" target="_blank" rel="noopener noreferrer">Find more photographs</a></div>
+   <div class="section-title">What to look for</div><p class="muted" id="features" style="font-size:12px;line-height:1.6"></p>
+   <div class="tabs" role="tablist" aria-label="Explore stops"><button id="verifiedTab" class="active" role="tab" aria-selected="true">Major stops</button><button id="allTab" role="tab" aria-selected="false">84 traditional ghats</button></div>
+   <input class="search" id="search" type="search" aria-label="Search stops" placeholder="Search places and ghats…">
+   <div id="stopList" class="place-list"></div>
+   <p class="footnote">Major stops have source-linked coordinates. Traditional ghats without validated coordinates remain in the directory, not on invented map pins.</p>
+  </div>
+ </aside>
+</main>
+<footer class="footer">
+ <div class="buttons"><button id="prev" class="button" aria-label="Previous stop">‹</button><button id="play" class="button primary" aria-pressed="false">▶ Guided journey</button><button id="next" class="button" aria-label="Next stop">›</button></div>
+ <input class="progress" type="range" id="progress" min="0" max="15" value="0" aria-label="Go to major stop">
+ <small id="routePosition">Stop 1 of 16</small><span class="spacer"></span><small id="journeyStatus">Ready · Galleries start manually</small>
+</footer>
+</div>
+<div class="modal" id="photoModal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Fullscreen heritage photograph"><div class="modal-card"><div class="modal-top"><strong id="modalHeading">Photo gallery</strong><button class="button" id="closeModal" aria-label="Close fullscreen photograph">✕ Close</button></div><img id="modalImage" alt=""><p id="modalCaption"></p><div class="more-links"><a id="modalSource" target="_blank" rel="noopener noreferrer">Image source and licence</a></div></div></div>
+<div class="modal" id="helpModal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="How to use the real Kashi tour"><div class="modal-card"><div class="modal-top"><strong>How to use the Kashi journey</strong><button class="button" id="closeHelp">✕ Close</button></div><p>Select any major stop to fly to its mapped location. Use Guided journey for a user-controlled sequence between stops. Open each gallery and press Play if you want an automatic photo slideshow. The tour automatically pauses when you explore a gallery or manually choose a stop.</p><p><strong>Map</strong> and <strong>Satellite</strong> show the real geographic context. <strong>3D perspective</strong> tilts the map; it is not a surveyed architectural 3D scan. Dots mark only sourced positions. Straight connector lines and distance figures are lower-bound geographic references, NOT navigable river or walking routes. Unsurveyed traditional ghats remain searchable but are not given fabricated pins or distances.</p><p>For live boat/walking directions, seasonal accessibility or ritual access, consult local authorities and guides. Respect privacy and avoid photography of cremation ceremonies.</p></div></div>
+<script src="./assets/app.js?v=20261025b" defer></script>
+</body>
+</html>
