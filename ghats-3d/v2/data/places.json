@@ -1,0 +1,976 @@
+{
+  "version": "2026-10-25-v2-preview",
+  "publication": "preview",
+  "routeQuality": "Reference landmark chain, NOT a surveyed boat or walking route",
+  "sourceNote": "Coordinates linked to their source pages. Segments between points are straight geodesic minimum distances only. Do not infer safe navigation or accessible walking paths.",
+  "places": [
+    {
+      "id": "shool",
+      "name": "Shooltankeshwar Mahadev",
+      "hi": "शूलटंकेश्वर महादेव",
+      "lat": 25.2400137,
+      "lng": 82.9073936,
+      "kind": "temple",
+      "summary": "Madhopur pilgrimage gateway, south of the traditional 84-ghat waterfront. This is a different temple from the similarly named shrine beside Dashashwamedh Ghat.",
+      "whatToSee": "Temple approach, Shiva shrine and the Ganga river bend.",
+      "source": "https://sannidhi.net/sannidhi/shree-shool-tankeshwar-mahadev-temple-madhopur-varanasi-uttar-pradesh/",
+      "positionQuality": "mapped-reference",
+      "photos": [],
+      "sequence": 1
+    },
+    {
+      "id": "assi",
+      "name": "Assi Ghat",
+      "hi": "अस्सी घाट",
+      "lat": 25.28864778,
+      "lng": 83.00676167,
+      "kind": "ghat",
+      "summary": "Southern gateway of Varanasi's traditional waterfront and a popular setting for morning worship.",
+      "whatToSee": "Riverside steps, morning prayers and local boat landings.",
+      "source": "https://en.wikipedia.org/wiki/Assi_Ghat",
+      "positionQuality": "mapped-reference",
+      "photos": [
+        {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Assi_Ghat%2C_Varanasi.jpg?width=1100",
+          "caption": "Assi Ghat — Wikimedia Commons file",
+          "credit": "Wikimedia Commons (see original file for author and licence)",
+          "source": "https://commons.wikimedia.org/wiki/File:Assi_Ghat%2C_Varanasi.jpg",
+          "license": "Check original Commons file metadata",
+          "verifiedSubject": false
+        }
+      ],
+      "sequence": 2
+    },
+    {
+      "id": "tulsi",
+      "name": "Tulsi Ghat",
+      "hi": "तुलसी घाट",
+      "lat": 25.29024,
+      "lng": 83.00634,
+      "kind": "ghat",
+      "summary": "Ghat associated with poet-saint Goswami Tulsidas and nearby heritage traditions.",
+      "whatToSee": "Historic ghat buildings and the riverfront opposite Ramnagar.",
+      "source": "https://mapcarta.com/N988809665",
+      "positionQuality": "mapped-reference",
+      "photos": [
+        {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Tulsi_Ghat.jpg?width=1100",
+          "caption": "Tulsi Ghat — Wikimedia Commons file",
+          "credit": "Wikimedia Commons (see original file for author and licence)",
+          "source": "https://commons.wikimedia.org/wiki/File:Tulsi_Ghat.jpg",
+          "license": "Check original Commons file metadata",
+          "verifiedSubject": false
+        }
+      ],
+      "sequence": 3
+    },
+    {
+      "id": "chetsingh",
+      "name": "Chet Singh Ghat",
+      "hi": "चेत सिंह घाट",
+      "lat": 25.29522,
+      "lng": 83.00712,
+      "kind": "ghat",
+      "summary": "Recognisable fortified riverfront site associated with Chet Singh and eighteenth-century Banaras.",
+      "whatToSee": "Riverside fort walls, towers and gateways.",
+      "source": "https://mapcarta.com/N11461545077",
+      "positionQuality": "mapped-reference",
+      "photos": [
+        {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Chet_Singh_Ghat_in_Varanasi.jpg?width=1100",
+          "caption": "Chet Singh Ghat — Wikimedia Commons file",
+          "credit": "Wikimedia Commons (see original file for author and licence)",
+          "source": "https://commons.wikimedia.org/wiki/File:Chet_Singh_Ghat_in_Varanasi.jpg",
+          "license": "Check original Commons file metadata",
+          "verifiedSubject": false
+        }
+      ],
+      "sequence": 4
+    },
+    {
+      "id": "harishchandra",
+      "name": "Harishchandra Ghat",
+      "hi": "हरिश्चंद्र घाट",
+      "lat": 25.29832,
+      "lng": 83.00719,
+      "kind": "ghat",
+      "summary": "Historic sacred cremation ghat. The experience does not depict or photograph private funerary rites.",
+      "whatToSee": "Sacred riverfront buildings and the historic stepped bank.",
+      "source": "https://mapcarta.com/N1538127091",
+      "positionQuality": "mapped-reference",
+      "photos": [
+        {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Harishchandra_Ghat%2C_Varanasi.JPG?width=1100",
+          "caption": "Harishchandra Ghat — Wikimedia Commons file",
+          "credit": "Wikimedia Commons (see original file for author and licence)",
+          "source": "https://commons.wikimedia.org/wiki/File:Harishchandra_Ghat%2C_Varanasi.JPG",
+          "license": "Check original Commons file metadata",
+          "verifiedSubject": false
+        }
+      ],
+      "sequence": 5
+    },
+    {
+      "id": "kedar",
+      "name": "Kedar Ghat",
+      "hi": "केदार घाट",
+      "lat": 25.29905,
+      "lng": 83.00728,
+      "kind": "ghat",
+      "summary": "Known for the Kedareshwar temple and its distinctive colourful architectural character.",
+      "whatToSee": "Striped temple frontage, steps, shrines and water access.",
+      "source": "https://mapcarta.com/N988809596",
+      "positionQuality": "mapped-reference",
+      "photos": [
+        {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Kedar_Ghat_in_Varanasi.jpg?width=1100",
+          "caption": "Kedar Ghat — Wikimedia Commons file",
+          "credit": "Wikimedia Commons (see original file for author and licence)",
+          "source": "https://commons.wikimedia.org/wiki/File:Kedar_Ghat_in_Varanasi.jpg",
+          "license": "Check original Commons file metadata",
+          "verifiedSubject": false
+        }
+      ],
+      "sequence": 6
+    },
+    {
+      "id": "darbhanga",
+      "name": "Darbhanga Ghat",
+      "hi": "दरभंगा घाट",
+      "lat": 25.30522,
+      "lng": 83.00954,
+      "kind": "ghat",
+      "summary": "Imposing palace architecture and sandstone façades along the riverfront.",
+      "whatToSee": "Terraces, stone stairways and palace balconies.",
+      "source": "https://mapcarta.com/N1538127089",
+      "positionQuality": "mapped-reference",
+      "photos": [
+        {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Darbhanga_ghat_Varanasi.JPG?width=1100",
+          "caption": "Darbhanga Ghat — Wikimedia Commons file",
+          "credit": "Wikimedia Commons (see original file for author and licence)",
+          "source": "https://commons.wikimedia.org/wiki/File:Darbhanga_ghat_Varanasi.JPG",
+          "license": "Check original Commons file metadata",
+          "verifiedSubject": false
+        }
+      ],
+      "sequence": 7
+    },
+    {
+      "id": "dashashwamedh",
+      "name": "Dashashwamedh Ghat",
+      "hi": "दशाश्वमेध घाट",
+      "lat": 25.30693,
+      "lng": 83.01065,
+      "kind": "ghat",
+      "summary": "An important ceremonial hub, celebrated for the Ganga Aarti.",
+      "whatToSee": "Ghat steps, ritual platforms and the lively waterfront.",
+      "source": "https://mapcarta.com/N11690112169",
+      "positionQuality": "mapped-reference",
+      "photos": [
+        {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Dashashwamedh_Ghat_Varanasi.jpg?width=1100",
+          "caption": "Dashashwamedh Ghat — Wikimedia Commons file",
+          "credit": "Wikimedia Commons (see original file for author and licence)",
+          "source": "https://commons.wikimedia.org/wiki/File:Dashashwamedh_Ghat_Varanasi.jpg",
+          "license": "Check original Commons file metadata",
+          "verifiedSubject": false
+        }
+      ],
+      "sequence": 8
+    },
+    {
+      "id": "manmandir",
+      "name": "Man Mandir Ghat",
+      "hi": "मानमंदिर घाट",
+      "lat": 25.30766,
+      "lng": 83.01099,
+      "kind": "ghat",
+      "summary": "Palace riverfront associated with the historic astronomical observatory.",
+      "whatToSee": "Balconies, palace façade and observatory heritage.",
+      "source": "https://mapcarta.com/33342304",
+      "positionQuality": "mapped-reference",
+      "photos": [
+        {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/ManMandir_Ghat%2C_Varanasi.jpg?width=1100",
+          "caption": "Man Mandir Ghat — Wikimedia Commons file",
+          "credit": "Wikimedia Commons (see original file for author and licence)",
+          "source": "https://commons.wikimedia.org/wiki/File:ManMandir_Ghat%2C_Varanasi.jpg",
+          "license": "Check original Commons file metadata",
+          "verifiedSubject": false
+        }
+      ],
+      "sequence": 9
+    },
+    {
+      "id": "lalita",
+      "name": "Lalita Ghat",
+      "hi": "ललिता घाट",
+      "lat": 25.30966,
+      "lng": 83.01287,
+      "kind": "ghat",
+      "summary": "Historic ghat near the distinctive Nepalese temple and the old-city lanes.",
+      "whatToSee": "Nepalese temple and carved riverside structures.",
+      "source": "https://mapcarta.com/N1538127096",
+      "positionQuality": "mapped-reference",
+      "photos": [
+        {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Lalita_ghat_Varanasi.JPG?width=1100",
+          "caption": "Lalita Ghat — Wikimedia Commons file",
+          "credit": "Wikimedia Commons (see original file for author and licence)",
+          "source": "https://commons.wikimedia.org/wiki/File:Lalita_ghat_Varanasi.JPG",
+          "license": "Check original Commons file metadata",
+          "verifiedSubject": false
+        }
+      ],
+      "sequence": 10
+    },
+    {
+      "id": "manikarnika",
+      "name": "Manikarnika Ghat",
+      "hi": "मणिकर्णिका घाट",
+      "lat": 25.31077,
+      "lng": 83.01402,
+      "kind": "ghat",
+      "summary": "Sacred cremation riverfront; visitors are asked to respect the privacy and dignity of the ceremonies.",
+      "whatToSee": "Historic waterfront architecture, with no intrusive ritual photographs.",
+      "source": "https://mapcarta.com/33342302",
+      "positionQuality": "mapped-reference",
+      "photos": [
+        {
+          "url": "../../assets/images/photos/manikarnika-ghat.jpeg",
+          "caption": "Manikarnika Ghat — Punya Yatra photo collection",
+          "credit": "Punya Yatra collection",
+          "source": "../../gallery/",
+          "license": "Existing site asset",
+          "verifiedSubject": true
+        }
+      ],
+      "sequence": 11
+    },
+    {
+      "id": "scindia",
+      "name": "Scindia Ghat",
+      "hi": "सिंधिया घाट",
+      "lat": 25.31207,
+      "lng": 83.01543,
+      "kind": "ghat",
+      "summary": "Known for the leaning, partly submerged Ratneshwar Mahadev temple.",
+      "whatToSee": "Leaning shrine and stone terraces.",
+      "source": "https://mapcarta.com/N1538127126",
+      "positionQuality": "mapped-reference",
+      "photos": [
+        {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Scindia_Ghat%2C_Varanasi%2C_Uttar_Pradesh%2C_India_(2011).jpg?width=1100",
+          "caption": "Scindia Ghat — Wikimedia Commons file",
+          "credit": "Wikimedia Commons (see original file for author and licence)",
+          "source": "https://commons.wikimedia.org/wiki/File:Scindia_Ghat%2C_Varanasi%2C_Uttar_Pradesh%2C_India_(2011).jpg",
+          "license": "Check original Commons file metadata",
+          "verifiedSubject": false
+        }
+      ],
+      "sequence": 12
+    },
+    {
+      "id": "panchganga",
+      "name": "Panchganga Ghat",
+      "hi": "पंचगंगा घाट",
+      "lat": 25.31502,
+      "lng": 83.01799,
+      "kind": "ghat",
+      "summary": "One of the five important sacred waterfront tirthas of Varanasi.",
+      "whatToSee": "Historic riverside temples and monumental stone structures.",
+      "source": "https://mapcarta.com/N1538127113",
+      "positionQuality": "mapped-reference",
+      "photos": [
+        {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Varanasi_145_Panchaganga_ghat_and_Aurangzeb_mosque_(34524292510).jpg?width=1100",
+          "caption": "Panchganga Ghat — Wikimedia Commons file",
+          "credit": "Wikimedia Commons (see original file for author and licence)",
+          "source": "https://commons.wikimedia.org/wiki/File:Varanasi_145_Panchaganga_ghat_and_Aurangzeb_mosque_(34524292510).jpg",
+          "license": "Check original Commons file metadata",
+          "verifiedSubject": false
+        }
+      ],
+      "sequence": 13
+    },
+    {
+      "id": "rajghat",
+      "name": "Raj Ghat",
+      "hi": "राजघाट",
+      "lat": 25.32341,
+      "lng": 83.03104,
+      "kind": "ghat",
+      "summary": "Northern historic ghat and approach to the landmark river bridge.",
+      "whatToSee": "Northern steps and the Malviya Bridge setting.",
+      "source": "https://mapcarta.com/33342214",
+      "positionQuality": "mapped-reference",
+      "photos": [
+        {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Rajghat_Varanasi_4.jpg?width=1100",
+          "caption": "Raj Ghat — Wikimedia Commons file",
+          "credit": "Wikimedia Commons (see original file for author and licence)",
+          "source": "https://commons.wikimedia.org/wiki/File:Rajghat_Varanasi_4.jpg",
+          "license": "Check original Commons file metadata",
+          "verifiedSubject": false
+        }
+      ],
+      "sequence": 14
+    },
+    {
+      "id": "adikeshav",
+      "name": "Adi Keshav Ghat",
+      "hi": "आदि केशव घाट",
+      "lat": 25.328868,
+      "lng": 83.0428259,
+      "kind": "ghat",
+      "summary": "Northern heritage landmark at the confluence region of the Varuna and Ganga.",
+      "whatToSee": "Adi Keshav temple and sacred confluence setting.",
+      "source": "https://varanasitemples.in/category/vishnu-temples/adi-keshav/",
+      "positionQuality": "mapped-reference",
+      "photos": [],
+      "sequence": 15
+    },
+    {
+      "id": "sangam",
+      "name": "Ganga–Varuna Sangam",
+      "hi": "गंगा–वरुणा संगम",
+      "lat": null,
+      "lng": null,
+      "kind": "confluence",
+      "summary": "The northern culmination near Adi Keshav Ghat. Precise confluence-water coordinates must be verified separately.",
+      "whatToSee": "The meeting of the Varuna tributary and the Ganga.",
+      "source": "https://kashi.gov.in/listing-details/adi-keshav-ghat",
+      "positionQuality": "awaiting-confirmation",
+      "photos": [],
+      "sequence": 16
+    }
+  ],
+  "traditionalGhats": [
+    {
+      "id": "ghat-1",
+      "name": "Assi Ghat",
+      "sequence": 1,
+      "linkedStop": "assi",
+      "coordinateVerified": true
+    },
+    {
+      "id": "ghat-2",
+      "name": "Ganga Mahal (south) Ghat",
+      "sequence": 2,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-3",
+      "name": "Rewa Ghat",
+      "sequence": 3,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-4",
+      "name": "Tulsi Ghat",
+      "sequence": 4,
+      "linkedStop": "tulsi",
+      "coordinateVerified": true
+    },
+    {
+      "id": "ghat-5",
+      "name": "Bhadaini Ghat",
+      "sequence": 5,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-6",
+      "name": "Janaki Ghat",
+      "sequence": 6,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-7",
+      "name": "Mata Anandamayi Ghat",
+      "sequence": 7,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-8",
+      "name": "Vaccharaja Ghat",
+      "sequence": 8,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-9",
+      "name": "Jain Ghat",
+      "sequence": 9,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-10",
+      "name": "Nishad Ghat",
+      "sequence": 10,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-11",
+      "name": "Prabhu Ghat",
+      "sequence": 11,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-12",
+      "name": "Panchkota Ghat",
+      "sequence": 12,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-13",
+      "name": "Chet Singh Ghat",
+      "sequence": 13,
+      "linkedStop": "chetsingh",
+      "coordinateVerified": true
+    },
+    {
+      "id": "ghat-14",
+      "name": "Niranjani Ghat",
+      "sequence": 14,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-15",
+      "name": "Mahanirvani Ghat",
+      "sequence": 15,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-16",
+      "name": "Shivala Ghat",
+      "sequence": 16,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-17",
+      "name": "Gularia Ghat",
+      "sequence": 17,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-18",
+      "name": "Dandi Ghat",
+      "sequence": 18,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-19",
+      "name": "Hanuman Ghat",
+      "sequence": 19,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-20",
+      "name": "Prachin Hanuman Ghat",
+      "sequence": 20,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-21",
+      "name": "Karnataka Ghat",
+      "sequence": 21,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-22",
+      "name": "Harishchandra Ghat",
+      "sequence": 22,
+      "linkedStop": "harishchandra",
+      "coordinateVerified": true
+    },
+    {
+      "id": "ghat-23",
+      "name": "Lali Ghat",
+      "sequence": 23,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-24",
+      "name": "Vijayanagaram Ghat",
+      "sequence": 24,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-25",
+      "name": "Kedar Ghat",
+      "sequence": 25,
+      "linkedStop": "kedar",
+      "coordinateVerified": true
+    },
+    {
+      "id": "ghat-26",
+      "name": "Chauki Ghat",
+      "sequence": 26,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-27",
+      "name": "Kshemeshwar Ghat",
+      "sequence": 27,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-28",
+      "name": "Mansarovar Ghat",
+      "sequence": 28,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-29",
+      "name": "Narad Ghat",
+      "sequence": 29,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-30",
+      "name": "Raja Ghat",
+      "sequence": 30,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-31",
+      "name": "Khori Ghat",
+      "sequence": 31,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-32",
+      "name": "Pandey Ghat",
+      "sequence": 32,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-33",
+      "name": "Sarveshwar Ghat",
+      "sequence": 33,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-34",
+      "name": "Digpatia Ghat",
+      "sequence": 34,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-35",
+      "name": "Chausatthi Ghat",
+      "sequence": 35,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-36",
+      "name": "Rana Mahal Ghat",
+      "sequence": 36,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-37",
+      "name": "Darbhanga Ghat",
+      "sequence": 37,
+      "linkedStop": "darbhanga",
+      "coordinateVerified": true
+    },
+    {
+      "id": "ghat-38",
+      "name": "Munshi Ghat",
+      "sequence": 38,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-39",
+      "name": "Ahilyabai Ghat",
+      "sequence": 39,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-40",
+      "name": "Sheetla Ghat",
+      "sequence": 40,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-41",
+      "name": "Dashashwamedh Ghat",
+      "sequence": 41,
+      "linkedStop": "dashashwamedh",
+      "coordinateVerified": true
+    },
+    {
+      "id": "ghat-42",
+      "name": "Prayag Ghat",
+      "sequence": 42,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-43",
+      "name": "Rajendra Prasad Ghat",
+      "sequence": 43,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-44",
+      "name": "Man Mandir Ghat",
+      "sequence": 44,
+      "linkedStop": "manmandir",
+      "coordinateVerified": true
+    },
+    {
+      "id": "ghat-45",
+      "name": "Tripura Bhairavi Ghat",
+      "sequence": 45,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-46",
+      "name": "Mir Ghat",
+      "sequence": 46,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-47",
+      "name": "Phuta Ghat",
+      "sequence": 47,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-48",
+      "name": "Nepali Ghat",
+      "sequence": 48,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-49",
+      "name": "Lalita Ghat",
+      "sequence": 49,
+      "linkedStop": "lalita",
+      "coordinateVerified": true
+    },
+    {
+      "id": "ghat-50",
+      "name": "Bauli Ghat",
+      "sequence": 50,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-51",
+      "name": "Jalasen Ghat",
+      "sequence": 51,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-52",
+      "name": "Khirki Ghat",
+      "sequence": 52,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-53",
+      "name": "Manikarnika Ghat",
+      "sequence": 53,
+      "linkedStop": "manikarnika",
+      "coordinateVerified": true
+    },
+    {
+      "id": "ghat-54",
+      "name": "Bajirao Ghat",
+      "sequence": 54,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-55",
+      "name": "Scindia Ghat",
+      "sequence": 55,
+      "linkedStop": "scindia",
+      "coordinateVerified": true
+    },
+    {
+      "id": "ghat-56",
+      "name": "Sankatha Ghat",
+      "sequence": 56,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-57",
+      "name": "Ganga Mahal (north) Ghat",
+      "sequence": 57,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-58",
+      "name": "Bhonsale Ghat",
+      "sequence": 58,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-59",
+      "name": "Naya Ghat",
+      "sequence": 59,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-60",
+      "name": "Ganesh Ghat",
+      "sequence": 60,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-61",
+      "name": "Mehta Ghat",
+      "sequence": 61,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-62",
+      "name": "Ram Ghat",
+      "sequence": 62,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-63",
+      "name": "Jatara Ghat",
+      "sequence": 63,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-64",
+      "name": "Raja Gwalior Ghat",
+      "sequence": 64,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-65",
+      "name": "Mangala Gauri Ghat",
+      "sequence": 65,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-66",
+      "name": "Venimadhav Ghat",
+      "sequence": 66,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-67",
+      "name": "Panchganga Ghat",
+      "sequence": 67,
+      "linkedStop": "panchganga",
+      "coordinateVerified": true
+    },
+    {
+      "id": "ghat-68",
+      "name": "Durga Ghat",
+      "sequence": 68,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-69",
+      "name": "Brahma Ghat",
+      "sequence": 69,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-70",
+      "name": "Bundi Parakota Ghat",
+      "sequence": 70,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-71",
+      "name": "Adi Sheetla Ghat",
+      "sequence": 71,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-72",
+      "name": "Lala Ghat",
+      "sequence": 72,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-73",
+      "name": "Hanuman Garhi Ghat",
+      "sequence": 73,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-74",
+      "name": "Gai Ghat",
+      "sequence": 74,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-75",
+      "name": "Badri Narayan Ghat",
+      "sequence": 75,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-76",
+      "name": "Trilochan Ghat",
+      "sequence": 76,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-77",
+      "name": "Gola Ghat",
+      "sequence": 77,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-78",
+      "name": "Nandeshwar Ghat",
+      "sequence": 78,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-79",
+      "name": "Sakka Ghat",
+      "sequence": 79,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-80",
+      "name": "Telianala Ghat",
+      "sequence": 80,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-81",
+      "name": "Naya (north) Ghat",
+      "sequence": 81,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-82",
+      "name": "Prahlad Ghat",
+      "sequence": 82,
+      "linkedStop": null,
+      "coordinateVerified": false
+    },
+    {
+      "id": "ghat-83",
+      "name": "Raj Ghat Ghat",
+      "sequence": 83,
+      "linkedStop": "rajghat",
+      "coordinateVerified": true
+    },
+    {
+      "id": "ghat-84",
+      "name": "Adi Keshav Ghat",
+      "sequence": 84,
+      "linkedStop": "adikeshav",
+      "coordinateVerified": true
+    }
+  ],
+  "generalGallery": [
+    {
+      "url": "../../assets/images/photos/colorful-ghat.jpeg",
+      "caption": "Colourful Kashi riverfront (general view)",
+      "credit": "Punya Yatra photo collection",
+      "source": "../../gallery/",
+      "siteContext": true
+    },
+    {
+      "url": "../../assets/images/photos/ganga-ghat.jpeg",
+      "caption": "Ganga riverfront architecture (general view)",
+      "credit": "Punya Yatra photo collection",
+      "source": "../../gallery/",
+      "siteContext": true
+    },
+    {
+      "url": "../../assets/images/photos/night-ghat.jpeg",
+      "caption": "Illuminated ghats at night (general view)",
+      "credit": "Punya Yatra photo collection",
+      "source": "../../gallery/",
+      "siteContext": true
+    },
+    {
+      "url": "../../assets/images/photos/river-temple.jpeg",
+      "caption": "Historic riverfront temple view (general view)",
+      "credit": "Punya Yatra photo collection",
+      "source": "../../gallery/",
+      "siteContext": true
+    },
+    {
+      "url": "../../assets/images/photos/royal-palace.jpeg",
+      "caption": "Kashi palace architecture (general view)",
+      "credit": "Punya Yatra photo collection",
+      "source": "../../gallery/",
+      "siteContext": true
+    }
+  ]
+}
