@@ -44,19 +44,66 @@
 #allGhats button{background:rgba(255,255,255,.07);border:1px solid #ffffff13;text-align:left;color:#f0e9df;padding:11px 12px;border-radius:9px;font-size:12px}
 #allGhats button:hover,#allGhats button:focus-visible{background:#e8bf8735;border-color:#e8bf8788}
 @media(max-width:780px){#routePanel{top:67px;bottom:76px;padding:15px}#routePanel h2{font-size:25px}.top-actions #showAllGhats{font-size:11px;padding:9px}}
+
+/* Photographic landmark guide: images loaded only for the active stop. */
+.landmark-figure{margin:0 0 12px;overflow:hidden;border:1px solid rgba(255,255,255,.18);border-radius:12px;background:rgba(21,37,52,.74)}
+.landmark-image{position:relative;display:block;width:100%;border:0;background:#25394d;color:#f7ecd8;padding:0;overflow:hidden;aspect-ratio:16/9}
+.landmark-image img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .24s}
+.landmark-image:hover img{transform:scale(1.035)}
+.landmark-image::after{content:'⤢  Expand photo';position:absolute;right:8px;bottom:9px;font-size:10px;border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:5px 8px;background:rgba(9,21,33,.75);backdrop-filter:blur(6px)}
+.landmark-image[hidden],.landmark-figure[hidden]{display:none}
+.photo-placeholder{display:flex;align-items:center;gap:9px;padding:15px 12px;color:#d6e3ef;font-size:12px;line-height:1.4;background:linear-gradient(130deg,#223e54,#2b4557)}
+.photo-meta{padding:9px 10px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:10px;color:#cbd5df}
+.photo-meta span{line-height:1.5}.photo-meta a{color:#f5d19b;text-decoration:underline;text-underline-offset:2px}
+.photo-note{font-size:10px;color:#d5e0e9;margin:0}
+#photoDialog{position:fixed;inset:0;z-index:35;background:rgba(5,13,23,.95);display:none;place-items:center;gap:10px;padding:20px;overflow-y:auto}
+#photoDialog.open{display:grid}
+#photoDialog .photo-view{width:min(100%,1000px);max-height:calc(100dvh - 110px);object-fit:contain;box-shadow:0 15px 40px #0006;border-radius:12px}
+#photoDialog .photo-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;width:min(100%,1000px);flex-wrap:wrap}
+#photoDialog .photo-footer p{font-size:12px;color:#d4dce6;margin:0;line-height:1.5}
+#photoDialog .photo-footer a{color:#f7cc8b}
+#closePhoto{position:fixed;right:20px;top:17px;width:42px;height:42px;border-radius:50%;background:#253e56;color:white;border:1px solid #fff5;font-size:22px}
+.side{max-height:min(68dvh,590px);overflow-x:hidden;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#7d91a0 transparent}
+.side .landmark-image:focus-visible{outline-offset:-4px}
+@media(max-width:780px){
+  body.intro .side{display:none}
+  .side{top:70px;bottom:auto;left:12px;width:min(218px,57vw);max-width:min(218px,57vw);max-height:51dvh;padding:10px 11px;overflow:auto}
+  .landmark-figure{margin-bottom:8px;border-radius:9px}
+  .landmark-image{aspect-ratio:16/10}
+  .landmark-image::after{font-size:9px;padding:4px 6px;bottom:6px;right:6px}
+  .photo-meta{padding:7px 6px;gap:3px;font-size:9px}
+  .photo-placeholder{padding:9px;font-size:10px}
+  .side h2{font-size:17px}
+  #photoDialog{padding:10px}
+}
+
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Walk the Ghats in 3D","url":"https://punyayatra.in/ghats-3d/","description":"An interactive artistic 3D interpretation of five Varanasi ghats, not a surveyed geographic reconstruction.","isPartOf":{"@type":"WebSite","name":"Punya Yatra","url":"https://punyayatra.in/"}}</script>
 </head>
-<body>
+<body class="intro">
 <div id="scene" aria-label="Interactive 3D scene spanning Shooltankeshwar Mahadev to the Ganga Varuna Sangam"></div><div class="vignette"></div>
 <header class="top"><a href="../" class="brand" aria-label="Return to Punya Yatra home"><span class="brand-mark" aria-hidden="true">ॐ</span><span><strong>Punya Yatra</strong><small>Immersive Kashi</small></span></a><div class="top-actions"><button id="reset" class="chip" title="Return to starting view">↺ Reset view</button><button id="showAllGhats" class="chip" aria-controls="routePanel" aria-expanded="false">84 Ghats</button><button id="time" class="chip" aria-pressed="false" title="Switch between sunrise and evening">☀ Sunrise</button><button id="helpBtn" class="chip iconbtn" title="Help" aria-label="How to explore">?</button></div></header>
 <div class="banner" id="banner"><div class="eyebrow">The sacred river journey · Varanasi</div><h1>Walk beside<br><em>the Ganga.</em></h1><p>Journey from Shooltankeshwar Mahadev past the 84 historic ghats to the sacred Ganga–Varuna Sangam.</p><button id="start" class="cta">Begin the journey <span aria-hidden="true">→</span></button></div>
 <div id="markers" aria-label="Explore landmarks"></div><aside id="routePanel" aria-label="Directory of 84 Varanasi ghats" aria-hidden="true"><div class="route-head"><div><small>THE GHATS IN SEQUENCE</small><h2>All 84 Ghats</h2></div><button id="closeGhats" aria-label="Close ghats directory">✕</button></div><p>South to north, Assi to Adi Keshav. Shooltankeshwar lies farther south; the confluence is the northern endpoint.</p><input id="ghatSearch" type="search" placeholder="Search a ghat (e.g. Kedar)" aria-label="Search all ghats"><div id="allGhats"></div><small>The 3D model is an artistic reconstruction; names and counts vary by source.</small></aside>
-<section class="side" aria-live="polite"><small id="areaType">YOUR VIRTUAL STOP</small><h2 id="areaName">Dashashwamedh Ghat</h2><p id="areaText">The ceremonial heart of Varanasi, known for its evening Ganga Aarti.</p><div class="tip" id="hint">Use A / D to move sideways, W / S to walk, and drag to look around.</div></section>
+<section class="side" aria-live="polite">
+  <small id="areaType">YOUR VIRTUAL STOP</small>
+  <h2 id="areaName">Shooltankeshwar Mahadev</h2>
+  <figure id="landmarkFigure" class="landmark-figure" hidden>
+    <button type="button" id="enlargePhoto" class="landmark-image" aria-label="Open landmark photograph"><img id="landmarkPhoto" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></button>
+    <figcaption class="photo-meta"><span id="landmarkPhotoCredit"></span><a id="landmarkPhotoSource" target="_blank" rel="noopener noreferrer">Photo and licence</a></figcaption>
+  </figure>
+  <div class="photo-placeholder" id="landmarkPhotoPlaceholder">▧ <span>Exploring verified photographs for this landmark.</span></div>
+  <p id="areaText">The southern sacred gateway of this virtual river journey.</p>
+  <div class="tip" id="hint">Use A / D to move sideways, W / S to walk, and drag to look around.</div></section>
 <div class="modes" aria-label="Viewing modes"><button class="chip mode active" data-mode="overview"><b>◇ Aerial view</b><span>See the riverfront</span></button><button class="chip mode" data-mode="walk"><b>♙ Walk the steps</b><span>Explore freely</span></button><button class="chip mode" data-mode="boat"><b>≈ River cruise</b><span>See the ghats by boat</span></button></div>
 <nav id="ghatbar" class="gbar" aria-label="Visit a ghat"></nav>
 <div id="joystick" aria-label="Virtual walking joystick"><div id="stick"></div></div>
-<div id="status" role="status"></div><div class="credit">Artistic 3D interpretation · Not to scale<br>Developed and maintained by Champak Roy</div>
+<div id="status" role="status"></div>
+<div id="photoDialog" role="dialog" aria-modal="true" aria-label="Landmark photograph" aria-hidden="true">
+  <button id="closePhoto" aria-label="Close photograph">✕</button>
+  <img id="expandedPhoto" class="photo-view" alt="">
+  <div class="photo-footer"><p id="expandedPhotoCaption"></p><a id="expandedPhotoSource" target="_blank" rel="noopener noreferrer">Original photograph and licence</a></div>
+</div><div class="credit">Artistic 3D interpretation · Not to scale<br>Developed and maintained by Champak Roy</div>
 <div id="loader"><div><div class="spinner"></div><h2>Preparing the ghats of Kashi</h2><p>Building the river, carved steps and old city skyline in 3D…</p><button id="retry" class="cta" onclick="location.reload()">Try again</button></div></div>
 <div id="help" role="dialog" aria-modal="true" aria-labelledby="helpTitle"><div class="help-card"><h2 id="helpTitle">How to explore Kashi</h2><p>Choose a ghat from the bottom ribbon or use any viewing mode.</p><ul><li><strong>Walk:</strong> W / A / S / D or arrow up/down + A/D to move; drag anywhere on the scene to turn the camera.</li><li><strong>Mobile:</strong> Move the round joystick with your left thumb; drag on the right side of the screen to look around.</li><li><strong>River cruise:</strong> Enjoy a moving boat-side view of the temples and steps.</li><li><strong>Sunrise / evening:</strong> Change the atmosphere at the top right. Select a ghat to jump directly there.</li></ul><p>The 84-ghat directory follows the traditional Assi-to-Adi Keshav sequence. Shooltankeshwar is a separate southern stop. <a href="https://kashi.gov.in/listing-details/shooltankeshwar-temple" target="_blank" rel="noopener noreferrer">Southern temple reference</a> · <a href="https://kashi.gov.in/listing-details/adi-keshav-ghat" target="_blank" rel="noopener noreferrer">Northern confluence reference</a>.</p><p><strong>Note:</strong> This journey spans Shooltankeshwar to the Ganga–Varuna Sangam through the 84 traditional riverfront ghats. It is a stylised representation, not a geospatial survey or navigation map. Sacred sites are presented respectfully.</p><button id="closeHelp" class="cta">Continue exploring →</button></div></div>
 <script type="module">
@@ -300,8 +347,88 @@ const landmarks=zones.map((g,i)=>{
  $('#markers').appendChild(node);return {node,point:new THREE.Vector3(g.x,25,27)};
 });
 zones.forEach((g,i)=>{const b=document.createElement('button');b.textContent=g.name;b.addEventListener('click',()=>visit(i));$('#ghatbar').appendChild(b)});
+
+// Commons photographs link to the original file and licence; the user's gallery image is local.
+// Images are not applied as textures to the artistic 3D buildings.
+const commonsPhoto=(file,photographer,license,caption)=>({
+  image:'https://commons.wikimedia.org/wiki/Special:FilePath/'+encodeURIComponent(file.replaceAll(' ','_'))+'?width=850',
+  source:'https://commons.wikimedia.org/wiki/File:'+encodeURIComponent(file.replaceAll(' ','_')),
+  photographer,license,caption,kind:'commons'
+});
+const stopPhotographs={
+ 'Assi Ghat':commonsPhoto('Assi Ghat, Varanasi.jpg','Watashiwa.vikram','CC BY-SA 4.0','Evening riverfront view at Assi Ghat'),
+ 'Tulsi Ghat':commonsPhoto('Tulsi Ghat.jpg','Nandanupadhyay','CC BY-SA 3.0','Photograph of Tulsi Ghat'),
+ 'Chet Singh Ghat':commonsPhoto('Chet Singh Ghat in Varanasi.jpg','Patrick Barry','CC BY-SA 2.0','Fortified Chet Singh riverfront'),
+ 'Harishchandra Ghat':commonsPhoto('Harishchandra Ghat, Varanasi.JPG','Vrinda','CC BY-SA 3.0','Historical waterfront buildings at Harishchandra Ghat'),
+ 'Kedar Ghat':commonsPhoto('Kedar Ghat in Varanasi.jpg','Patrick Barry','CC BY-SA 2.0','Kedar Ghat at dawn'),
+ 'Darbhanga Ghat':commonsPhoto('Darbhanga ghat Varanasi.JPG','Ilya Mauter','CC BY 3.0','Darbhanga Ghat riverfront architecture'),
+ 'Dashashwamedh Ghat':commonsPhoto('Dashashwamedh Ghat Varanasi.jpg','Kasyap','CC BY-SA 4.0','Dashashwamedh Ghat on the Ganga'),
+ 'Man Mandir Ghat':commonsPhoto('ManMandir Ghat, Varanasi.jpg','Vrinda','CC BY-SA 3.0','Historic Man Mandir Ghat'),
+ 'Lalita Ghat':commonsPhoto('Lalita ghat Varanasi.JPG','Ilya Mauter','CC BY 3.0','Lalita Ghat on the Ganga'),
+ 'Manikarnika Ghat':{
+   image:'../assets/images/photos/manikarnika-ghat.jpeg',source:'../gallery/',
+   photographer:'Punya Yatra photo collection',license:'Site collection',caption:'Manikarnika Ghat from the Punya Yatra gallery',kind:'local'
+ },
+ 'Scindia Ghat':commonsPhoto('Scindia Ghat, Varanasi, Uttar Pradesh, India (2011).jpg','Aleksandr Zykov','CC BY-SA 2.0','Scindia Ghat riverfront'),
+ 'Panchganga Ghat':commonsPhoto('Varanasi 145 Panchaganga ghat and Aurangzeb mosque (34524292510).jpg','juggadery','CC BY-SA 2.0','Panchganga Ghat and surrounding heritage'),
+ 'Raj Ghat':commonsPhoto('Rajghat Varanasi 4.jpg','Rangan Datta Wiki','CC BY-SA 4.0','Historic Rajghat area and Lal Khan Tomb')
+};
+const photoAlternativeSources={
+ 'Shooltankeshwar Mahadev':{text:'View photographs of the temple',url:'https://hindi.ianslive.in/sawan-vishesh-kashi-ka-shooltankeshwar-mahadev-mandir-jahan-ganga-ke-veg-ko-baba-vishwanath-ne-trishul-se-roka-tha--20250711122217'},
+ 'Adi Keshav Ghat':{text:'View a photograph of Adi Keshav Ghat',url:'https://www.tourmyindia.com/states/uttarpradesh/adi-keshava-ghat-varanasi.html'}
+};
+let photoToken=0,currentPhoto=null;
+function renderStopPhoto(name){
+  const photo=stopPhotographs[name],version=++photoToken;
+  const figure=$('#landmarkFigure'),image=$('#landmarkPhoto'),place=$('#landmarkPhotoPlaceholder');
+  currentPhoto=photo||null;
+  figure.hidden=true;place.hidden=false;image.removeAttribute('src');
+  image.onload=null;image.onerror=null;
+  if(!photo){
+    const alt=photoAlternativeSources[name];
+    place.replaceChildren();
+    const label=document.createElement('span');
+    label.textContent=alt?'No licensed photograph is embedded for this stop. ':'A verified photograph has not been added for this stop.';
+    place.append(label);
+    if(alt){
+      const a=document.createElement('a');a.href=alt.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=alt.text;
+      a.style.color='#f5d19b';a.style.textDecoration='underline';place.append(a);
+    }
+    return;
+  }
+  place.textContent='Loading authentic landmark photograph…';
+  image.alt=photo.caption;
+  $('#landmarkPhotoCredit').textContent=photo.photographer+' · '+photo.license;
+  $('#landmarkPhotoSource').href=photo.source;
+  $('#landmarkPhotoSource').textContent=photo.kind==='local'?'Punya Yatra gallery':'Image, author & licence';
+  image.onload=()=>{if(version!==photoToken)return;figure.hidden=false;place.hidden=true;};
+  image.onerror=()=>{
+    if(version!==photoToken)return;
+    currentPhoto=null;figure.hidden=true;place.hidden=false;place.replaceChildren();
+    const label=document.createElement('span');label.textContent='Photograph unavailable. ';
+    const link=document.createElement('a');link.href=photo.source;link.target='_blank';link.rel='noopener noreferrer';link.textContent='View original photo';link.style.color='#f5d19b';
+    place.append(label,link);
+  };
+  image.src=photo.image;
+}
+$('#enlargePhoto').addEventListener('click',()=>{
+ if(!currentPhoto||$('#landmarkFigure').hidden)return;
+ const dlg=$('#photoDialog');
+ $('#expandedPhoto').src=$('#landmarkPhoto').currentSrc||currentPhoto.image;
+ $('#expandedPhoto').alt=currentPhoto.caption;
+ $('#expandedPhotoCaption').textContent=currentPhoto.caption+' — '+currentPhoto.photographer+' · '+currentPhoto.license;
+ $('#expandedPhotoSource').href=currentPhoto.source;
+ dlg.classList.add('open');dlg.setAttribute('aria-hidden','false');$('#closePhoto').focus();
+});
+function closePhoto(){
+ const dlg=$('#photoDialog');dlg.classList.remove('open');dlg.setAttribute('aria-hidden','true');$('#expandedPhoto').removeAttribute('src');
+}
+$('#closePhoto').addEventListener('click',closePhoto);
+$('#photoDialog').addEventListener('click',e=>{if(e.target.id==='photoDialog')closePhoto()});
+
 function select(i){
  selected=i;$('#areaName').textContent=zones[i].name;$('#areaText').textContent=zones[i].about;
+ renderStopPhoto(zones[i].name);
  [...$('#ghatbar').children].forEach((b,j)=>{b.classList.toggle('active',i===j);b.setAttribute('aria-current',i===j?'location':'false')});
  $('#ghatbar').children[i]?.scrollIntoView({block:'nearest',inline:'nearest',behavior:'smooth'});
 }
@@ -320,7 +447,8 @@ function renderGhatDirectory(){
    if(mode==='walk'){player.x=x;player.z=-10;player.y=groundAt(x,-10)+1.72;}
    if(mode==='boat')cruise=(x+335)/670;
    $('#areaType').textContent='TRADITIONAL GHAT '+(i+1)+' / 84';
-   $('#areaName').textContent=name+' Ghat';
+    $('#areaName').textContent=name+' Ghat';
+   renderStopPhoto(name+' Ghat');
    $('#areaText').textContent='Explore this riverfront section in a stylised 3D scene. Individual structures and distances are not to scale.';
    $('#routePanel').classList.remove('open');$('#routePanel').setAttribute('aria-hidden','true');$('#showAllGhats').setAttribute('aria-expanded','false');
   });
@@ -338,7 +466,7 @@ $('#ghatSearch').addEventListener('input',renderGhatDirectory);
 
 const player={x:0,z:-9,y:0,yaw:Math.PI,pitch:-.08};
 const key=new Set(),joy={x:0,y:0};let joyPointer=null;
-function showIntro(visible){$('#banner').style.display=visible?'block':'none'}
+function showIntro(visible){$('#banner').style.display=visible?'block':'none';document.body.classList.toggle('intro',visible)}
 function setMode(next){
  mode=next;document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));
  const walking=mode==='walk';$('#joystick').style.display=walking&&compact?'block':'none';
@@ -352,7 +480,7 @@ function reset(){select(0);mode='overview';document.querySelectorAll('[data-mode
 $('#start').addEventListener('click',()=>setMode('walk'));$('#reset').addEventListener('click',reset);document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.mode)));
 $('#time').addEventListener('click',()=>{dusk=!dusk;$('#time').textContent=dusk?'☾ Evening':'☀ Sunrise';$('#time').setAttribute('aria-pressed',String(dusk));scene.background.setHex(dusk?0x34405c:0x9fc4da);scene.fog.color.setHex(dusk?0x3e465f:0xacc9db);ambient.intensity=dusk?1.08:2.1;sun.intensity=dusk?1.1:2.55;sun.color.setHex(dusk?0xff916a:0xffdfaa);waterMaterial.color.setHex(dusk?0x325a7a:0x4b94a4);riverLamps.forEach(l=>l.visible=dusk)});
 $('#helpBtn').addEventListener('click',()=>$('#help').classList.add('open'));$('#closeHelp').addEventListener('click',()=>$('#help').classList.remove('open'));$('#help').addEventListener('click',e=>{if(e.target.id==='help')$('#help').classList.remove('open')});
-window.addEventListener('keydown',e=>{if(e.key==='Escape'){$('#help').classList.remove('open');$('#routePanel').classList.remove('open');$('#routePanel').setAttribute('aria-hidden','true');dragging=false}if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key))e.preventDefault();key.add(e.key.toLowerCase())});
+window.addEventListener('keydown',e=>{if(e.key==='Escape'){closePhoto();$('#help').classList.remove('open');$('#routePanel').classList.remove('open');$('#routePanel').setAttribute('aria-hidden','true');dragging=false}if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key))e.preventDefault();key.add(e.key.toLowerCase())});
 window.addEventListener('keyup',e=>key.delete(e.key.toLowerCase()));window.addEventListener('blur',()=>key.clear());
 const canvas=renderer.domElement;
 canvas.addEventListener('pointerdown',e=>{if(mode!=='walk')return;dragging=true;startingX=e.clientX;startingY=e.clientY;canvas.setPointerCapture(e.pointerId)});
